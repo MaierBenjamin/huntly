@@ -1,20 +1,15 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="ion-padding ion-text-center">
+  <img src="assets/icon/favicon.png" alt="Huntly Logo" style="width: 100px;">
+  <h1>Huntly</h1>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-item lines="full">
+    <ion-label position="floating">Dein Name (Pflichtfeld)</ion-label>
+    <ion-input [(ngModel)]="gameService.playerName" placeholder="Name eingeben..."></ion-input>
+  </ion-item>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <ion-button expand="block" [disabled]="!gameService.playerName" (click)="startHunt()">
+    Schnitzeljagd starten
+  </ion-button>
+
+  <ion-button fill="clear">Rangliste</ion-button>
 </ion-content>
