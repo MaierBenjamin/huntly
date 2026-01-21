@@ -20,8 +20,12 @@
 
     <h2>{{distance}} Meter</h2>
 
-    <button [class.finish-btn]="distance != 0"
-             [class.finish-btn-task-finished]="distance == 0">Aufgabe erledigt</button>
+<button 
+  [disabled]="distance > 5"
+  [class.finish-btn]="distance != 0"
+  [class.finish-btn-task-finished]="distance == 0">
+  {{ distance == 0 ? 'Erledigt!' : 'Gehe zum Ziel' }}
+</button>
     <div class="nav-btns">
       <button class="skip-btn">Überspringen</button>
       <button class="stop-btn">Abbrechen</button>
