@@ -23,8 +23,8 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/taskboard/taskboard.page').then( m => m.TaskboardPage)
   },
   {
-    path: 'gps-task',
-    loadComponent: () => import('./pages/gps-task/gps-task.page').then(m => m.GpsTaskPage)
+    path: 'task-gps',
+    loadComponent: () => import('./pages/task-gps/task-gps.page').then(m => m.TaskGpsPage)
   },
   {
     path: 'task-qr',
