@@ -21,9 +21,22 @@ export const routes: Routes = [
   {
     path: 'taskboard',
     loadComponent: () => import('./pages/taskboard/taskboard.page').then( m => m.TaskboardPage)
-  },  {
+  },
+  {
     path: 'gps-task',
-    loadComponent: () => import('./pages/tasks/gps-task/gps-task.page').then( m => m.GpsTaskPage)
+    loadComponent: () => import('./pages/gps-task/gps-task.page').then(m => m.GpsTaskPage)
+  },
+  {
+    path: 'task-qr',
+    loadComponent: () => import('./pages/task-qr/task-qr.page').then( m => m.TaskQrPage)
+  },
+  {
+    path: 'task-sensor',
+    loadComponent: () => import('./pages/task-sensor/task-sensor.page').then( m => m.TaskSensorPage)
+  },
+  {
+    path: 'leaderboard',
+    loadComponent: () => import('./pages/leaderboard/leaderboard.page').then( m => m.LeaderboardPage)
   },
 
 ];
