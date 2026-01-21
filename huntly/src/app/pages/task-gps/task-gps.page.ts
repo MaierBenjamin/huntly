@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
+import { Geolocation } from '@capacitor/geolocation';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,36 +9,66 @@ import { Router } from '@angular/router';
   templateUrl: './task-gps.page.html',
   styleUrls: ['./task-gps.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule, TaskLayoutComponent]
+  imports: [CommonModule, IonicModule]
 })
-export class TaskGpsPage implements OnInit {
-  distance: number = 10;
+export class TaskGpsPage implements OnInit, OnDestroy {
+  distance: number = 999; 
+  watchId: string | null = null;
 
-  constructor(private router: Router) {}
+readonly target = {
+  lat: 47.027139, 
+  lng: 8.301083
+};
 
-  ngOnInit() {
-
-    const interval = setInterval(() => {
-      if (this.distance > 0) {
-        this.distance -= 2;
-      } else {
-        clearInterval(interval);
-      }
-    }, 2000);
+  async ngOnInit() {
+    await this.startTracking();
   }
 
-  completeTask() {
-    console.log('Task manuell als erledigt markiert');
-    this.router.navigate(['/task-qr']);
+  ngOnDestroy() {
+    this.stopTracking();
   }
 
-  nextTask() {
-    console.log('Task übersprungen');
-    this.router.navigate(['/task-qr']);
+  async startTracking() {
+    const permissions = await Geolocation.requestPermissions();
+    
+    if (permissions.location === 'granted') {
+      this.watchId = await Geolocation.watchPosition({
+        enableHighAccuracy: true, 
+      }, (position) => {
+        if (position) {
+          const d = this.calculateDistance(
+            position.coords.latitude,
+            position.coords.longitude,
+            this.target.lat,
+            this.target.lng
+          );
+          
+          this.distance = d < 5 ? 0 : Math.round(d);
+        }
+      });
+    }
   }
 
-  abortGame() {
-    console.log('Spiel abgebrochen');
-    this.router.navigate(['/home']);
+  stopTracking() {
+    if (this.watchId) {
+      Geolocation.clearWatch({ id: this.watchId });
+    }
+  }
+
+  calculateDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+    const R = 6371e3; 
+    const phi1 = lat1 * Math.PI / 180;
+    const phi2 = lat2 * Math.PI / 180;
+    const deltaPhi = (lat2 - lat1) * Math.PI / 180;
+    const deltaLambda = (lon2 - lon1) * Math.PI / 180;
+
+    const a = Math.sin(deltaPhi / 2) * Math.sin(deltaPhi / 2) +
+              Math.cos(phi1) * Math.cos(phi2) *
+              Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; 
   }
 }
+
+
