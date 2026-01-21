@@ -1,24 +1,30 @@
-<ion-content [fullscreen]="true" [class.task-success]="isFinished">
-  <div class="main-wrapper">
+<ion-content [fullscreen]="true" class="task-page-content" [class.success-bg]="isFinished">
+  <div class="outer-wrapper">
+    <div class="white-card">
 
-    <div class="task-card">
-
-      <div class="content-projection">
-        <ng-content select="[top-content]"></ng-content>
+      <div class="card-header">
+        <span>Huntly</span>
+        <span>{{ currentTime }}</span>
       </div>
 
-      <h1>{{ taskTitle }}</h1>
-
-      <div class="middle-content">
-        <ng-content select="[middle-content]"></ng-content>
+      <div class="emoji-wrapper">
+        <ng-content select="[emoji]"></ng-content>
       </div>
 
-      <button class="finish-btn" (click)="finish.emit()">Aufgabe erledigt</button>
+      <h1 class="task-title">{{ taskTitle }}</h1>
 
-      <div class="nav-btns">
-        <button class="skip-btn" (click)="skip.emit()">Überspringen</button>
-        <button class="stop-btn" (click)="cancel.emit()">Abbrechen</button>
+      <div class="main-task-area">
+        <ng-content select="[task-content]"></ng-content>
       </div>
+
+      <div class="action-footer">
+        <button class="finish-btn" (click)="finish.emit()">Aufgabe erledigt</button>
+        <div class="nav-btns">
+          <button class="skip-btn" (click)="skip.emit()">Überspringen</button>
+          <button class="stop-btn" (click)="cancel.emit()">Abbrechen</button>
+        </div>
       </div>
+
     </div>
+  </div>
 </ion-content>

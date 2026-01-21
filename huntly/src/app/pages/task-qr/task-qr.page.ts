@@ -12,17 +12,28 @@ import { Router } from '@angular/router';
   imports: [CommonModule, IonicModule, TaskLayoutComponent]
 })
 export class TaskQrPage {
-  isScanning: boolean = false;
-  scanResult: string | null = null;
+  scanned: boolean = false;
 
   constructor(private router: Router) {}
 
-  async startScan() {
-    this.isScanning = true;
-    console.log('Scanner gestartet...');
+
+  startScan() {
+    console.log('Kamera wird geöffnet...');
+
+    setTimeout(() => {
+      this.scanned = true;
+    }, 1000);
   }
 
-  completeTask() {
-    this.router.navigate(['/task-sensor']);
+  onFinish() {
+    if (this.scanned) {
+      this.router.navigate(['/task-sensor']);
+    } else {
+      alert('Bitte scanne erst den QR-Code!');
+    }
+  }
+
+  onCancel() {
+    this.router.navigate(['/home']);
   }
 }

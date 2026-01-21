@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-task-gps',
@@ -69,3 +70,5 @@ readonly target = {
     return R * c; 
   }
 }
+
+

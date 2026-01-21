@@ -1,48 +1,132 @@
 
-.main-container {
-  --background: #91E4BA; // Das helle Grün aus deinem Entwurf
-  display: flex;
-  align-items: center;
-  justify-content: center;
+:host {
+  display: block;
   height: 100%;
+  width: 100%;
+}
+
+ion-content {
+
+  --background: #91E4BA;
+  --overflow: hidden;
+  transition: --background 0.5s ease;
+
+  &.success-bg {
+    --background: #54c37e !important;
+  }
+}
+
+
+.outer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  background: transparent;
 }
 
 .white-card {
   background: white;
-  border-radius: 30px;
+  border-radius: 20px;
   width: 90%;
   height: 85%;
+  padding: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  color: #333;
+
+  justify-content: flex-start;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: black;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
 }
 
-// Slot für das Emoji
-.emoji-section {
+.card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #bbb;
+}
+
+.time-tag {
+  color: #666;
+}
+
+.emoji-wrapper {
   font-size: 80px;
+  margin-top: 10px;
   margin-bottom: 20px;
 }
 
-.button-group {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-top: auto;
+.task-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
+.main-task-area {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+/* Button Styling */
 .finish-btn {
   background-color: #54c37e;
   color: white;
-  width: 100%;
-  max-width: 260px;
-  padding: 18px;
-  border-radius: 15px;
+  padding: 12px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 220px;
+  margin-bottom: 15px;
   border: none;
   font-weight: bold;
-  font-size: 1.1rem;
+}
+
+.nav-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.skip-btn, .stop-btn {
+  flex: 1;
+  max-width: 105px;
+  padding: 10px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.skip-btn {
+  color: black;
+  border: 1px solid black;
+}
+
+.stop-btn {
+  color: red;
+  border: 1px solid red;
+}
+
+.distance-display {
+  color: #666;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: auto;
+  margin-bottom: 20px;
 }

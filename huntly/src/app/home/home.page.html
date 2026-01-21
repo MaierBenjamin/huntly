@@ -1,15 +1,36 @@
-<ion-content class="ion-padding ion-text-center">
-  <img src="assets/icon/favicon.png" alt="Huntly Logo" style="width: 100px;">
-  <h1>Huntly</h1>
+<ion-content [fullscreen]="true">
+  <div class="wrapper-background">
 
-  <ion-item lines="full">
-    <ion-label position="floating">Dein Name (Pflichtfeld)</ion-label>
-    <ion-input [(ngModel)]="gameService.playerName" placeholder="Name eingeben..."></ion-input>
-  </ion-item>
+    <div class="white-card">
+      <div class="card-header">
+        <span>Huntly</span>
+        <span>Start</span>
+      </div>
 
-  <ion-button expand="block" [disabled]="!gameService.playerName" (click)="startHunt()">
-    Schnitzeljagd starten
-  </ion-button>
+      <div class="welcome-section">
+        <img src="assets/icon/favicon.png" alt="Huntly Logo" class="home-logo">
+        <h1>Willkommen bei Huntly</h1>
 
-  <ion-button fill="clear">Rangliste</ion-button>
+        <div class="input-container">
+          <label>Dein Name (Pflichtfeld)</label>
+          <input type="text" [(ngModel)]="gameService.playerName" placeholder="Name eingeben...">
+        </div>
+      </div>
+
+      <div class="menu-area">
+        <button class="start-btn"
+                [disabled]="!gameService.playerName"
+                (click)="startHunt()">
+          Schnitzeljagd starten
+        </button>
+
+        <div class="nav-btns">
+          <button class="secondary-btn" (click)="openHistory()">Verlauf</button>
+          <button class="secondary-btn" (click)="openLeaderboard()">Rangliste</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
 </ion-content>
