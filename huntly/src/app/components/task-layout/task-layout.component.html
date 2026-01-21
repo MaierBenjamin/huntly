@@ -13,13 +13,12 @@
         <ng-content select="[middle-content]"></ng-content>
       </div>
 
-      <button class="finish-btn" (click)="onFinish()">Aufgabe erledigt</button>
+      <button class="finish-btn" (click)="finish.emit()">Aufgabe erledigt</button>
 
       <div class="nav-btns">
-        <button class="skip-btn" (click)="onSkip()">Überspringen</button>
-        <button class="stop-btn" (click)="onCancel()">Abbrechen</button>
+        <button class="skip-btn" (click)="skip.emit()">Überspringen</button>
+        <button class="stop-btn" (click)="cancel.emit()">Abbrechen</button>
+      </div>
       </div>
     </div>
-
-  </div>
 </ion-content>

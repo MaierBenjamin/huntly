@@ -1,13 +1,22 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>task-qr</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-task-layout
+  taskTitle="Scanne den Code am Kühlschrank"
+  [isFinished]="scanResult !== null"
+  (finish)="completeTask()">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">task-qr</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+  <div top-content>
+    <span style="font-size: 100px;">📸</span>
+  </div>
+
+  <div middle-content>
+    <div *ngIf="!scanResult" class="scan-container">
+      <p style="color: #666; margin-bottom: 20px;">Suche nach dem QR-Code und scanne ihn ein.</p>
+      <button class="action-btn" (click)="startScan()">Kamera öffnen</button>
+    </div>
+
+    <div *ngIf="scanResult" class="success-info">
+      <ion-icon name="checkmark-circle" color="success" style="font-size: 40px;"></ion-icon>
+      <p>Code erkannt!</p>
+    </div>
+  </div>
+
+</app-task-layout>

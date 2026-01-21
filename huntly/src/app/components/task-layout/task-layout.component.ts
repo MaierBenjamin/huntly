@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/common';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
@@ -16,4 +16,8 @@ export class TaskLayoutComponent {
   @Output() finish = new EventEmitter<void>();
   @Output() skip = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
+
+  onFinish() { this.finish.emit(); }
+  onSkip() { this.skip.emit(); }
+  onCancel() { this.cancel.emit(); }
 }
