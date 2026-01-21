@@ -22,7 +22,7 @@ export class TaskLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.updateTime();
-    // Intervall alle 30 Sekunden reicht für die Uhrzeit aus
+
     this.timerInterval = setInterval(() => this.updateTime(), 30000);
   }
 

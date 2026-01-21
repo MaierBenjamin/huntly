@@ -6,15 +6,12 @@
 
   <span emoji>📸</span>
 
-  <div task-content class="qr-container">
-    <p *ngIf="!scanned">Suche den Code am Kühlschrank</p>
-
-    <div class="scan-box" (click)="startScan()" [class.scanned]="scanned">
-      <ion-icon *ngIf="!scanned" name="qr-code-outline"></ion-icon>
-      <ion-icon *ngIf="scanned" name="checkmark-circle" color="success"></ion-icon>
+  <div task-content>
+    <div class="qr-placeholder" (click)="startScan()" [class.scanned]="scanned">
+      <ion-icon *ngIf="!scanned" name="qr-code-outline" style="font-size: 60px;"></ion-icon>
+      <ion-icon *ngIf="scanned" name="checkmark-circle" color="success" style="font-size: 60px;"></ion-icon>
     </div>
-
-    <h2 *ngIf="scanned" style="color: #54c37e; margin-top: 20px;">Code erkannt!</h2>
+    <h2 *ngIf="scanned" style="color: #54c37e; font-size: 1.2rem; margin-top: 15px;">Erfolgreich!</h2>
   </div>
 
 </app-task-layout>

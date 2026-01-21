@@ -1,21 +1,48 @@
 
-
-.task-page-content {
-  --background: transparent;
-}
-
-.wrapper-background {
-  background-color: #91E4BA; // Grün
+:host {
+  display: block;
   height: 100%;
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 0.5s ease;
 }
 
-.success-bg {
-  background-color: #54c37e !important;
+ion-content {
+
+  --background: #91E4BA;
+  --overflow: hidden;
+  transition: --background 0.5s ease;
+
+  &.success-bg {
+    --background: #54c37e !important;
+  }
+}
+
+
+.outer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+
+  background: transparent;
+}
+
+.white-card {
+  background: white;
+  border-radius: 20px;
+  width: 90%;
+  height: 85%;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  justify-content: flex-start;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: black;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .card-header {
@@ -23,7 +50,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   font-size: 0.9rem;
   font-weight: bold;
   color: #bbb;
@@ -33,34 +60,16 @@
   color: #666;
 }
 
-
-
-.white-card {
-  background: white;
-  border-radius: 20px;
-  margin: 20px;
-  padding: 30px;
-  width: 90%;
-  height: 85%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  color: black;
-  text-align: center;
-}
-
 .emoji-wrapper {
-  font-size: 100px;
-  margin-top: 20px;
-  margin-bottom: 40px;
+  font-size: 80px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .task-title {
   font-weight: bold;
   font-size: 1.5rem;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 }
 
 .main-task-area {
@@ -68,9 +77,12 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: 100%;
+  margin-bottom: 20px;
 }
 
+/* Button Styling */
 .finish-btn {
   background-color: #54c37e;
   color: white;
@@ -109,4 +121,12 @@
 .stop-btn {
   color: red;
   border: 1px solid red;
+}
+
+.distance-display {
+  color: #666;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: auto;
+  margin-bottom: 20px;
 }

@@ -1,29 +1,14 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Task-GPS</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-task-layout
+  taskTitle="Begib dich zum Kühlschrank"
+  [isFinished]="distance < 2"
+  (finish)="completeTask()"
+  (skip)="nextTask()"
+  (cancel)="abortGame()">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">gps-task</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <body class="body">
-  <div class="content">
-    <h1 class="pin-emoji">📍</h1>
+  <span emoji>📍</span>
 
-    <h1>Begib dich zum Kühlschrank</h1>
-
-    <h2>{{distance}} Meter</h2>
-
-    <button class="finish-btn">Aufgabe erledigt</button>
-    <div class="nav-btns">
-      <button class="skip-btn">Überspringen</button>
-      <button class="stop-btn">Abbrechen</button>
-    </div>
-
+  <div task-content>
+    <h2 class="distance-display">{{ distance }} Meter</h2>
   </div>
-  </body>
-</ion-content>
+
+</app-task-layout>
