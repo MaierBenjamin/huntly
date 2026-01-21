@@ -35,3 +35,14 @@
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import '@ionic/angular/css/palettes/dark.system.css';
+
+body.barcode-scanner-active {
+  --ion-background-color: transparent !important;
+  background: transparent !important;
+
+  app-task-layout,
+  .wrapper-background,
+  .white-card {
+    background: transparent !important;
+  }
+}

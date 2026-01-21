@@ -2,16 +2,30 @@
   taskTitle="QR-Code scannen"
   [isFinished]="scanned"
   (finish)="onFinish()"
+  (skip)="onSkip()"
   (cancel)="onCancel()">
 
   <span emoji>📸</span>
 
-  <div task-content>
-    <div class="qr-placeholder" (click)="startScan()" [class.scanned]="scanned">
-      <ion-icon *ngIf="!scanned" name="qr-code-outline" style="font-size: 60px;"></ion-icon>
-      <ion-icon *ngIf="scanned" name="checkmark-circle" color="success" style="font-size: 60px;"></ion-icon>
+  <div task-content class="qr-container">
+
+    <div *ngIf="!scanned" class="scan-box" (click)="pickImageAndScan()">
+      <div class="icon-circle">
+        <ion-icon name="camera-outline"></ion-icon>
+      </div>
+      <p>Code am Zielort fotografieren</p>
+      <small *ngIf="errorMessage" class="error-hint">{{ errorMessage }}</small>
     </div>
-    <h2 *ngIf="scanned" style="color: #54c37e; font-size: 1.2rem; margin-top: 15px;">Erfolgreich!</h2>
+
+    <div *ngIf="scanned" class="success-display">
+      <div class="check-circle">
+        <ion-icon name="checkmark-done"></ion-icon>
+      </div>
+      <h2>Code akzeptiert!</h2>
+      <p class="result-text">"{{ scanResult }}"</p>
+      <button class="change-btn" (click)="pickImageAndScan()">Anderes Bild?</button>
+    </div>
+
   </div>
 
 </app-task-layout>
