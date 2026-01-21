@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { GpsTaskPage } from './gps-task.page';
+import { TaskGpsPage } from './task-gps.page';
 
-describe('GpsTaskPage', () => {
-  let component: GpsTaskPage;
-  let fixture: ComponentFixture<GpsTaskPage>;
+describe('TaskGpsPage', () => {
+  let component: TaskGpsPage;
+  let fixture: ComponentFixture<TaskGpsPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GpsTaskPage);
+    fixture = TestBed.createComponent(TaskGpsPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -11,7 +11,7 @@ export interface Task {
   providedIn: 'root'
 })
 export class GameService {
-  playerName: string = '';
+  playerName: string = 'Test Benutzer';
   currentTaskIndex: number = 0;
 
   tasks: Task[] = [

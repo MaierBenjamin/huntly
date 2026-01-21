@@ -31,6 +31,10 @@
     Berechtigungen erteilen
   </ion-button>
 
+  <ion-button fill="clear" color="medium" (click)="bypass()" class="ion-margin-top">
+    Bypass Permissions (Browser Test)
+  </ion-button>
+
   <ion-button *ngIf="hasCameraPerm && hasLocationPerm"
               expand="block" color="success" (click)="startGame()" class="ion-margin-top">
     Start

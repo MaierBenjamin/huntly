@@ -58,9 +58,14 @@ export class PermissionsPage implements OnInit {
     }
   }
 
+  bypass() {
+    this.hasCameraPerm = true;
+    this.hasLocationPerm = true;
+  } // brauchen wir nur für browser testing
+
   startGame() {
     if (this.hasCameraPerm && this.hasLocationPerm) {
-      this.router.navigate(['/task']);
+      this.router.navigate(['/task-gps']);
     }
   }
 }

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { Haptics } from './haptics';
+import { HapticsService } from './haptics.service';
 
-describe('Haptics', () => {
-  let service: Haptics;
+describe('HapticsService', () => {
+  let service: HapticsService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(Haptics);
+    service = TestBed.inject(HapticsService);
   });
 
   it('should be created', () => {
