@@ -1,48 +1,112 @@
 
-.main-container {
-  --background: #91E4BA; // Das helle Grün aus deinem Entwurf
+
+.task-page-content {
+  --background: transparent;
+}
+
+.wrapper-background {
+  background-color: #91E4BA; // Grün
+  height: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100%;
+  transition: background-color 0.5s ease;
 }
+
+.success-bg {
+  background-color: #54c37e !important;
+}
+
+.card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #bbb;
+}
+
+.time-tag {
+  color: #666;
+}
+
+
 
 .white-card {
   background: white;
-  border-radius: 30px;
+  border-radius: 20px;
+  margin: 20px;
+  padding: 30px;
   width: 90%;
   height: 85%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  color: #333;
+  justify-content: flex-start;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  color: black;
+  text-align: center;
 }
 
-// Slot für das Emoji
-.emoji-section {
-  font-size: 80px;
-  margin-bottom: 20px;
+.emoji-wrapper {
+  font-size: 100px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
-.button-group {
-  width: 100%;
+.task-title {
+  font-weight: bold;
+  font-size: 1.5rem;
+  margin-bottom: 50px;
+}
+
+.main-task-area {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  margin-top: auto;
+  justify-content: center;
+  width: 100%;
 }
 
 .finish-btn {
   background-color: #54c37e;
   color: white;
-  width: 100%;
-  max-width: 260px;
-  padding: 18px;
-  border-radius: 15px;
+  padding: 12px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 220px;
+  margin-bottom: 15px;
   border: none;
   font-weight: bold;
-  font-size: 1.1rem;
+}
+
+.nav-btns {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
+}
+
+.skip-btn, .stop-btn {
+  flex: 1;
+  max-width: 105px;
+  padding: 10px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  background-color: white;
+  text-align: center;
+  cursor: pointer;
+}
+
+.skip-btn {
+  color: black;
+  border: 1px solid black;
+}
+
+.stop-btn {
+  color: red;
+  border: 1px solid red;
 }

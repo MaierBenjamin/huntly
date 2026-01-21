@@ -1,22 +1,20 @@
 <app-task-layout
-  taskTitle="Scanne den Code am Kühlschrank"
-  [isFinished]="scanResult !== null"
-  (finish)="completeTask()">
+  taskTitle="QR-Code scannen"
+  [isFinished]="scanned"
+  (finish)="onFinish()"
+  (cancel)="onCancel()">
 
-  <div top-content>
-    <span style="font-size: 100px;">📸</span>
-  </div>
+  <span emoji>📸</span>
 
-  <div middle-content>
-    <div *ngIf="!scanResult" class="scan-container">
-      <p style="color: #666; margin-bottom: 20px;">Suche nach dem QR-Code und scanne ihn ein.</p>
-      <button class="action-btn" (click)="startScan()">Kamera öffnen</button>
+  <div task-content class="qr-container">
+    <p *ngIf="!scanned">Suche den Code am Kühlschrank</p>
+
+    <div class="scan-box" (click)="startScan()" [class.scanned]="scanned">
+      <ion-icon *ngIf="!scanned" name="qr-code-outline"></ion-icon>
+      <ion-icon *ngIf="scanned" name="checkmark-circle" color="success"></ion-icon>
     </div>
 
-    <div *ngIf="scanResult" class="success-info">
-      <ion-icon name="checkmark-circle" color="success" style="font-size: 40px;"></ion-icon>
-      <p>Code erkannt!</p>
-    </div>
+    <h2 *ngIf="scanned" style="color: #54c37e; margin-top: 20px;">Code erkannt!</h2>
   </div>
 
 </app-task-layout>

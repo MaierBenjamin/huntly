@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 
@@ -9,7 +9,7 @@ import { IonicModule } from '@ionic/angular';
   templateUrl: './task-layout.component.html',
   styleUrls: ['./task-layout.component.scss']
 })
-export class TaskLayoutComponent {
+export class TaskLayoutComponent implements OnInit, OnDestroy {
   @Input() taskTitle: string = '';
   @Input() isFinished: boolean = false;
 
@@ -17,7 +17,21 @@ export class TaskLayoutComponent {
   @Output() skip = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
-  onFinish() { this.finish.emit(); }
-  onSkip() { this.skip.emit(); }
-  onCancel() { this.cancel.emit(); }
+  currentTime: string = '';
+  private timerInterval: any;
+
+  ngOnInit() {
+    this.updateTime();
+    // Intervall alle 30 Sekunden reicht für die Uhrzeit aus
+    this.timerInterval = setInterval(() => this.updateTime(), 30000);
+  }
+
+  ngOnDestroy() {
+    if (this.timerInterval) clearInterval(this.timerInterval);
+  }
+
+  updateTime() {
+    const now = new Date();
+    this.currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
 }

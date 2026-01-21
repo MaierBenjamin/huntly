@@ -1,16 +1,20 @@
-<ion-content [fullscreen]="true" [class.task-success]="isFinished">
-  <div class="main-wrapper">
+<ion-content [fullscreen]="true" class="task-page-content">
+  <div class="wrapper-background" [class.success-bg]="isFinished">
 
-    <div class="task-card">
-
-      <div class="content-projection">
-        <ng-content select="[top-content]"></ng-content>
+    <div class="white-card">
+      <div class="card-header">
+        <span class="app-name-tag">Huntly</span>
+        <span class="time-tag">{{ currentTime }}</span>
       </div>
 
-      <h1>{{ taskTitle }}</h1>
+      <div class="emoji-wrapper">
+        <ng-content select="[emoji]"></ng-content>
+      </div>
 
-      <div class="middle-content">
-        <ng-content select="[middle-content]"></ng-content>
+      <h1 class="task-title">{{ taskTitle }}</h1>
+
+      <div class="main-task-area">
+        <ng-content select="[task-content]"></ng-content>
       </div>
 
       <button class="finish-btn" (click)="finish.emit()">Aufgabe erledigt</button>
@@ -19,6 +23,7 @@
         <button class="skip-btn" (click)="skip.emit()">Überspringen</button>
         <button class="stop-btn" (click)="cancel.emit()">Abbrechen</button>
       </div>
-      </div>
     </div>
+
+  </div>
 </ion-content>
