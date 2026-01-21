@@ -12,7 +12,7 @@ import { TaskLayoutComponent } from '../../components/task-layout/task-layout.co
   imports: [CommonModule, IonicModule, TaskLayoutComponent]
 })
 export class TaskGpsPage {
-  distance: number = 10;
+  distance: number = 0;
 
   completeTask() {
     console.log('Task erledigt!');

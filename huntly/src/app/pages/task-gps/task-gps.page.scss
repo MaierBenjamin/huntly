@@ -38,8 +38,23 @@ h2 {
   background-color: #91E4BA;
 }
 
+.body-task-finished{
+  background: linear-gradient(135deg, #05DF72 0%, #00A63E 100%);
+}
+
 .finish-btn {
   background-color: #54c37e;
+  color: white;
+  padding: 12px 0;
+  border-radius: 10px;
+  font-size: 1rem;
+  width: 220px;
+  margin-bottom: 15px;
+  border: none;
+}
+
+.finish-btn-task-finished {
+  background-color: #00a63e;
   color: white;
   padding: 12px 0;
   border-radius: 10px;
