@@ -16,5 +16,5 @@ export class GpsTaskPage implements OnInit {
 
   ngOnInit() {
   }
-
+  distance: number = 0;
 }
