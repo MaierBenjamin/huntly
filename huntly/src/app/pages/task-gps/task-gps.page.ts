@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+// src/app/pages/task-gps/task-gps.page.ts
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { IonContent, IonButton } from '@ionic/angular/standalone';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
 
 @Component({
@@ -10,16 +9,12 @@ import { TaskLayoutComponent } from '../../components/task-layout/task-layout.co
   templateUrl: './task-gps.page.html',
   styleUrls: ['./task-gps.page.scss'],
   standalone: true,
-
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonContent,
-    IonButton,
-    TaskLayoutComponent
-  ]
+  imports: [CommonModule, IonicModule, TaskLayoutComponent]
 })
-export class TaskGpsPage implements OnInit {
-  constructor() { }
-  ngOnInit() { }
+export class TaskGpsPage {
+  distance: number = 10;
+
+  completeTask() {
+    console.log('Task erledigt!');
+  }
 }

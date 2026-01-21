@@ -1,34 +1,25 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
-    </ion-buttons>
+<ion-content [fullscreen]="true" [class.task-success]="isFinished">
+  <div class="main-wrapper">
 
-    <ion-title>Aufgabe {{ taskNumber }}</ion-title>
+    <div class="task-card">
 
-    <ion-buttons slot="end">
-      <ion-note color="light" class="ion-margin-end">00:45</ion-note>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+      <div class="content-projection">
+        <ng-content select="[top-content]"></ng-content>
+      </div>
 
-<ion-content class="ion-padding">
-  <div class="task-header ion-text-center ion-margin-bottom">
-    <h2 class="ion-no-margin">{{ taskTitle }}</h2>
-  </div>
+      <h1>{{ taskTitle }}</h1>
 
-  <div class="task-body">
-    <ng-content></ng-content>
+      <div class="middle-content">
+        <ng-content select="[middle-content]"></ng-content>
+      </div>
+
+      <button class="finish-btn" (click)="onFinish()">Aufgabe erledigt</button>
+
+      <div class="nav-btns">
+        <button class="skip-btn" (click)="onSkip()">Überspringen</button>
+        <button class="stop-btn" (click)="onCancel()">Abbrechen</button>
+      </div>
+    </div>
+
   </div>
 </ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-button color="danger" fill="clear">Abbrechen</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button color="medium" fill="clear">Überspringen</ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-footer>

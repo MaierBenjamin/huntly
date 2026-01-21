@@ -1,14 +1,14 @@
-<app-task-layout taskNumber="1/4" taskTitle="Begebe dich zum Kühlschrank">
+<app-task-layout
+  taskTitle="Begib dich zum Kühlschrank"
+  [isFinished]="distance < 2"
+  (finish)="completeTask()">
 
-  <div class="ion-text-center">
-    <div class="distance-display ion-margin-vertical">
-      <p>Aktuelle Distanz:</p>
-      <h1 style="font-size: 3rem;">12m</h1>
-    </div>
+  <div top-content class="emoji-section">
+    📍
+  </div>
 
-    <ion-button expand="block" shape="round" color="success">
-      Ich bin da!
-    </ion-button>
+  <div middle-content>
+    <h2 style="font-size: 2rem; color: #444;">{{ distance }} Meter</h2>
   </div>
 
 </app-task-layout>

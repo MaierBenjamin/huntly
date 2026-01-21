@@ -1,23 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/common';
 import { CommonModule } from '@angular/common';
-import {
-  IonHeader, IonToolbar, IonTitle, IonContent,
-  IonFooter, IonButtons, IonButton, IonNote, IonBackButton
-} from '@ionic/angular/standalone';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-task-layout',
-  templateUrl: './task-layout.component.html',
-  styleUrls: ['./task-layout.component.scss'],
   standalone: true,
-  imports: [
-    CommonModule, IonHeader, IonToolbar, IonTitle,
-    IonContent, IonFooter, IonButtons, IonButton, IonNote, IonBackButton
-  ]
+  imports: [CommonModule, IonicModule],
+  templateUrl: './task-layout.component.html',
+  styleUrls: ['./task-layout.component.scss']
 })
 export class TaskLayoutComponent {
-  @Input() taskNumber: string = '1/4'; // Beispiel: "1 von 4"
-  @Input() taskTitle: string = 'Aufgabe';
+  @Input() taskTitle: string = '';
+  @Input() isFinished: boolean = false;
 
-  constructor() { }
+  @Output() finish = new EventEmitter<void>();
+  @Output() skip = new EventEmitter<void>();
+  @Output() cancel = new EventEmitter<void>();
 }
