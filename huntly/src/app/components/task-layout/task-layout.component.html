@@ -1,3 +1,34 @@
-<p>
-  task-layout works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Aufgabe {{ taskNumber }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-note color="light" class="ion-margin-end">00:45</ion-note>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="task-header ion-text-center ion-margin-bottom">
+    <h2 class="ion-no-margin">{{ taskTitle }}</h2>
+  </div>
+
+  <div class="task-body">
+    <ng-content></ng-content>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="danger" fill="clear">Abbrechen</ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button color="medium" fill="clear">Überspringen</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
