@@ -1,36 +1,49 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Task-GPS</ion-title>
-
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content
+  [fullscreen]="true"
+  [class.body]="distance !== 0"
+  [class.body-task-finished]="distance === 0"
+>
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">gps-task</ion-title>
     </ion-toolbar>
   </ion-header>
-  <body [class.body]="distance != 0"
-             [class.body-task-finished]="distance == 0">
-  <div class="content">
-    <h1 class="pin-emoji">📍</h1>
 
-    <h1>Begib dich zum Kühlschrank</h1>
+  <body>
+    <div class="content">
 
-    <h2>{{distance}} Meter</h2>
+      <div class="task-icon">
+        <h1 class="pin-emoji">📍</h1>
+      </div>
 
-<button 
-  [disabled]="distance > 5"
-  [class.finish-btn]="distance != 0"
-  [class.finish-btn-task-finished]="distance == 0">
-  {{ distance == 0 ? 'Erledigt!' : 'Gehe zum Ziel' }}
-</button>
-    <div class="nav-btns">
-      <button class="skip-btn">Überspringen</button>
-      <button class="stop-btn">Abbrechen</button>
+      <h1 class="task-title">
+        Begib dich zum Kühlschrank
+      </h1>
+
+      <h2 class="task-distance">
+        {{ distance }} Meter
+      </h2>
+
+      <button
+        [disabled]="distance > 5"
+        [class.finish-btn]="distance !== 0"
+        [class.finish-btn-task-finished]="distance === 0"
+        (click)="completeTask()"
+      >
+        {{ distance === 0 ? 'Erledigt!' : 'Gehe zum Ziel' }}
+      </button>
+
+      <div class="nav-btns">
+        <button class="skip-btn" (click)="nextTask()">Überspringen</button>
+        <button class="stop-btn" (click)="abortGame()">Abbrechen</button>
+      </div>
+
     </div>
-
-  </div>
-
-</app-task-layout>
+  </body>
+</ion-content>
