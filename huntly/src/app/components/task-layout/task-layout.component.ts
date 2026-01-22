@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-task-layout',
@@ -11,29 +12,48 @@ import { IonicModule } from '@ionic/angular';
 })
 export class TaskLayoutComponent implements OnInit, OnDestroy {
   @Input() taskTitle: string = '';
-  @Input() taskTimer!: string;
-
   @Input() isFinished: boolean = false;
 
-  @Output() finish = new EventEmitter<void>();
+  @Output() finish = new EventEmitter<boolean>();
   @Output() skip = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
-  currentTime: string = '';
-  private timerInterval: any;
+  taskSecondsLeft: number = 120;
+  taskTimerDisplay: string = '02:00';
+  isTimerExpired: boolean = false;
+
+  private intervalId: any;
+
+  constructor(public gameService: GameService) {}
 
   ngOnInit() {
-    this.updateTime();
-
-    this.timerInterval = setInterval(() => this.updateTime(), 30000);
+    this.startTaskTimer();
   }
 
   ngOnDestroy() {
-    if (this.timerInterval) clearInterval(this.timerInterval);
+    if (this.intervalId) clearInterval(this.intervalId);
   }
 
-  updateTime() {
-    const now = new Date();
-    this.currentTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  startTaskTimer() {
+    this.intervalId = setInterval(() => {
+      if (this.taskSecondsLeft > 0) {
+        this.taskSecondsLeft--;
+        this.updateTimerDisplay();
+      } else {
+        this.isTimerExpired = true;
+        this.taskTimerDisplay = '00:00';
+        clearInterval(this.intervalId);
+      }
+    }, 1000);
+  }
+
+  updateTimerDisplay() {
+    const minutes = Math.floor(this.taskSecondsLeft / 60);
+    const seconds = this.taskSecondsLeft % 60;
+    this.taskTimerDisplay = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  onFinishClick() {
+    this.finish.emit(this.isTimerExpired);
   }
 }

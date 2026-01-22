@@ -1,8 +1,7 @@
 <app-task-layout
   taskTitle="QR-Code scannen"
-  [taskTimer]="localTimer"
   [isFinished]="scanned"
-  (finish)="onFinish()"
+  (finish)="onFinish($event)"
   (skip)="onSkip()"
   (cancel)="onCancel()">
 
@@ -24,6 +23,7 @@
       </div>
       <h2>Code akzeptiert!</h2>
       <p class="result-text">"{{ scanResult }}"</p>
+
       <button class="change-btn" (click)="pickImageAndScan()">Anderes Bild?</button>
     </div>
 

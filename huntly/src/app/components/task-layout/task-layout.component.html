@@ -1,13 +1,27 @@
 <ion-content [fullscreen]="true" class="task-page-content" [class.success-bg]="isFinished">
+
+  <div class="game-stats-header">
+    <div class="score-pill">
+      <span>🥩 {{ gameService.schnitzelCount }}</span>
+      <span class="divider">|</span>
+      <span>🥔 {{ gameService.kartoffelCount }}</span>
+    </div>
+    <div class="total-time">
+      <ion-icon name="stopwatch-outline"></ion-icon>
+      <span>{{ gameService.getFormattedTime() }}</span>
+    </div>
+  </div>
+
   <div class="outer-wrapper">
     <div class="white-card">
 
       <div class="card-header">
-        <span>Huntly</span>
-  <div class="timer-wrapper">
-    <ion-icon name="time-outline"></ion-icon>
-    <span>{{ taskTimer }}</span>
-  </div>
+        <span class="app-name">Huntly</span>
+
+        <div class="timer-wrapper" [class.timer-expired]="isTimerExpired">
+          <ion-icon [name]="isTimerExpired ? 'alert-circle-outline' : 'time-outline'"></ion-icon>
+          <span>{{ taskTimerDisplay }}</span>
+        </div>
       </div>
 
       <div class="emoji-wrapper">
@@ -21,13 +35,18 @@
       </div>
 
       <div class="action-footer">
-        <button class="finish-btn" (click)="finish.emit()">Aufgabe erledigt</button>
+        <button
+          class="finish-btn"
+          [disabled]="!isFinished"
+          (click)="finish.emit()">
+          Aufgabe erledigt
+        </button>
+
         <div class="nav-btns">
           <button class="skip-btn" (click)="skip.emit()">Überspringen</button>
           <button class="stop-btn" (click)="cancel.emit()">Abbrechen</button>
         </div>
       </div>
-
     </div>
   </div>
 </ion-content>

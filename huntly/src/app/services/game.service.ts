@@ -13,6 +13,45 @@ export interface Task {
 export class GameService {
   playerName: string = 'Test Benutzer';
   currentTaskIndex: number = 0;
+  schnitzelCount: number = 0;
+  kartoffelCount: number = 0;
+
+  totalSeconds: number = 0;
+  private timerInterval: any;
+
+
+  startGameTimer() {
+    if (this.timerInterval) return;
+    this.totalSeconds = 0;
+    this.timerInterval = setInterval(() => {
+      this.totalSeconds++;
+    }, 1000);
+  }
+
+  stopGameTimer() {
+    clearInterval(this.timerInterval);
+    this.timerInterval = null;
+  }
+
+
+  getFormattedTime(): string {
+    const mins = Math.floor(this.totalSeconds / 60);
+    const secs = this.totalSeconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  }
+
+  addSchnitzel() {
+    this.schnitzelCount++;
+  }
+
+  addKartoffel() {
+    this.kartoffelCount++;
+  }
+
+  resetGame() {
+    this.schnitzelCount = 0;
+    this.kartoffelCount = 0;
+  }
 
   tasks: Task[] = [
     { title: 'Begebe dich zum Kühlschrank', description: 'Suche den grössten Kühlschrank im Raum.', type: 'geolocation' },
