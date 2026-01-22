@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 
+export interface GameResult {
+  playerName: string;
+  date: string;
+  totalTime: string;
+  schnitzel: number;
+  kartoffeln: number;
+}
+
 export interface Task {
   title: string;
   description: string;
@@ -15,9 +23,9 @@ export class GameService {
   currentTaskIndex: number = 0;
   schnitzelCount: number = 0;
   kartoffelCount: number = 0;
-
   totalSeconds: number = 0;
   private timerInterval: any;
+  private readonly STORAGE_KEY = 'huntly_history';
 
 
   startGameTimer() {
@@ -33,12 +41,12 @@ export class GameService {
     this.timerInterval = null;
   }
 
-
   getFormattedTime(): string {
     const mins = Math.floor(this.totalSeconds / 60);
     const secs = this.totalSeconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
+
 
   addSchnitzel() {
     this.schnitzelCount++;
@@ -51,7 +59,40 @@ export class GameService {
   resetGame() {
     this.schnitzelCount = 0;
     this.kartoffelCount = 0;
+    this.totalSeconds = 0;
+    this.currentTaskIndex = 0;
   }
+
+  saveCurrentGame() {
+    const history = this.getHistory();
+
+    const newResult: GameResult = {
+      playerName: this.playerName || 'Anonym',
+      date: new Date().toLocaleDateString('de-DE', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      }),
+      totalTime: this.getFormattedTime(),
+      schnitzel: this.schnitzelCount,
+      kartoffeln: this.kartoffelCount
+    };
+    history.unshift(newResult);
+
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(history.slice(0, 10)));
+  }
+
+  getHistory(): GameResult[] {
+    const data = localStorage.getItem(this.STORAGE_KEY);
+    return data ? JSON.parse(data) : [];
+  }
+
+  clearHistory() {
+    localStorage.removeItem(this.STORAGE_KEY);
+  }
+
 
   tasks: Task[] = [
     { title: 'Begebe dich zum Kühlschrank', description: 'Suche den grössten Kühlschrank im Raum.', type: 'geolocation' },

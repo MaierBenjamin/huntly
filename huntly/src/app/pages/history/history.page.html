@@ -1,0 +1,46 @@
+<ion-header [translucent]="true" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Verlauf</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="clearAll()" color="danger">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="history-background">
+  <div class="header-decoration">
+    <ion-icon name="trophy-outline"></ion-icon>
+    <h2>Deine Erfolge</h2>
+  </div>
+
+  <div class="container">
+    <div class="empty-state" *ngIf="history.length === 0">
+      <p>Noch keine Jagden abgeschlossen.</p>
+      <ion-button fill="outline" (click)="goBack()">Jetzt starten!</ion-button>
+    </div>
+
+    <div class="history-card" *ngFor="let game of history">
+      <div class="card-left">
+        <span class="player-name">{{ game.playerName }}</span>
+        <span class="game-date">{{ game.date }}</span>
+      </div>
+
+      <div class="card-right">
+        <div class="stats-row">
+          <span class="stat">⏱️ {{ game.totalTime }}</span>
+        </div>
+        <div class="stats-row scores">
+          <span class="stat">🥩 {{ game.schnitzel }}</span>
+          <span class="stat">🥔 {{ game.kartoffeln }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>d

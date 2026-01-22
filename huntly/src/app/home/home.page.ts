@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; 
+import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GameService } from '../services/game.service'; 
+import { GameService } from '../services/game.service';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +24,6 @@ export class HomePage {
     }
   }
 
-  openHistory() { console.log('Verlauf'); }
+  openHistory() { this.router.navigate(['/history']); }
   openLeaderboard() { console.log('Rangliste'); }
 }
