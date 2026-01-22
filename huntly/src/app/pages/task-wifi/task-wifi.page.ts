@@ -63,6 +63,7 @@ export class TaskWifiPage implements OnInit, OnDestroy {
 
   async triggerSuccess() {
     this.isFinished = true;
+    
     this.taskStatusText = "Aufgabe erledigt";
     await Haptics.notification({ type: 'success' as any });
     this.cdr.detectChanges();
