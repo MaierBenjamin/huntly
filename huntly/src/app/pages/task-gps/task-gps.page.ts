@@ -17,6 +17,7 @@ export class TaskGpsPage implements OnInit, OnDestroy {
   distance: number = 999;
   watchId: string | null = null;
   hasVibrated: boolean = false;
+  isFinished: boolean = false; 
 
   remainingTime: number = 120; 
   localTimer: string = '02:00';
@@ -28,13 +29,15 @@ export class TaskGpsPage implements OnInit, OnDestroy {
     lng: 8.301139
   };
 
-constructor(
+  readonly TOLERANCE_METERS = 5;
+
+  constructor(
     private router: Router, 
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef
   ) {}
 
-async ngOnInit() {
+  async ngOnInit() {
     this.startTimer();
     await this.startTracking();
   }
@@ -45,7 +48,14 @@ async ngOnInit() {
   }
 
   completeTask() {
-    this.router.navigate(['/task-walk']);
+    if (this.distance <= this.TOLERANCE_METERS) {
+      this.stopTracking();
+      this.stopTimer();
+      this.router.navigate(['/task-walk']);
+    } else {
+      Haptics.vibrate();
+      console.log('Du bist noch zu weit weg!');
+    }
   }
 
   nextTask() {
@@ -57,7 +67,7 @@ async ngOnInit() {
     this.router.navigate(['/home']);
   }
 
-async startTracking() {
+  async startTracking() {
     const permissions = await Geolocation.requestPermissions();
 
     if (permissions.location === 'granted') {
@@ -73,12 +83,18 @@ async startTracking() {
               this.target.lng
             );
 
-            this.distance = d < 2 ? 0 : Math.round(d);
-
-            if (this.distance === 0 && !this.hasVibrated) {
-              await Haptics.notification({ type: 'success' as any });
-              this.hasVibrated = true;
+            this.distance = Math.round(d);
+            if (this.distance <= this.TOLERANCE_METERS) {
+              this.isFinished = true; 
+              
+              if (!this.hasVibrated) {
+                await Haptics.notification({ type: 'success' as any });
+                this.hasVibrated = true;
+              }
+            } else {
+              this.isFinished = false;
             }
+            
             this.cdr.detectChanges();
           }
         });
@@ -86,7 +102,7 @@ async startTracking() {
     }
   }
 
-stopTracking() {
+  stopTracking() {
     if (this.watchId) {
       Geolocation.clearWatch({ id: this.watchId });
     }
@@ -105,21 +121,20 @@ stopTracking() {
     return R * c;
   }
 
-startTimer() {
-  this.ngZone.run(() => {
-    this.timerInterval = setInterval(() => {
-      if (this.remainingTime > 0) {
-        this.remainingTime--;
-        this.formatTime();
-      } else {
-        this.penaltyCount++;
-        this.stopTimer();
-      }
-      this.cdr.detectChanges();
-    }, 1000);
-  });
-}
-
+  startTimer() {
+    this.ngZone.run(() => {
+      this.timerInterval = setInterval(() => {
+        if (this.remainingTime > 0) {
+          this.remainingTime--;
+          this.formatTime();
+        } else {
+          this.penaltyCount++;
+          this.stopTimer();
+        }
+        this.cdr.detectChanges();
+      }, 1000);
+    });
+  }
 
   formatTime() {
     const minutes = Math.floor(this.remainingTime / 60);
