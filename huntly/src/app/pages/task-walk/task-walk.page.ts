@@ -5,6 +5,7 @@ import { Motion } from '@capacitor/motion';
 import { Haptics } from '@capacitor/haptics';
 import { Router } from '@angular/router';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
+import { GameService } from '../../services/game.service'; // WICHTIG
 
 @Component({
   selector: 'app-task-walk',
@@ -17,11 +18,6 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   stepsDone: number = 0;
   stepsTarget: number = 15;
   isFinished: boolean = false;
-  
-  remainingTime: number = 30; 
-  localTimer: string = '00:30';
-  timerInterval: any;
-  penaltyCount: number = 0;
 
   private accelListener: any;
   private isThrottled: boolean = false;
@@ -29,67 +25,44 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   constructor(
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    public router: Router
+    private router: Router,
+    public gameService: GameService
   ) {}
 
   async ngOnInit() {
-    this.startTimer();
     this.startMotionTracking();
   }
 
   ngOnDestroy() {
-    this.stopTimer();
     this.stopMotionTracking();
   }
 
-
-  completeTask() {
-    if (this.isFinished) {
-      this.stopMotionTracking();
-      this.router.navigate(['/task-qr']);
-    } else {
-      console.log('Aufgabe noch nicht erfüllt!');
+  onFinish(isTimerExpired: boolean) {
+    this.gameService.addSchnitzel();
+    if (isTimerExpired) {
+      this.gameService.addKartoffel();
     }
-  }
-
-  nextTask() {
-
     this.stopMotionTracking();
     this.router.navigate(['/task-qr']);
   }
 
-  abortGame() {
+  onSkip() {
+    this.gameService.addKartoffel();
+    this.stopMotionTracking();
+    this.router.navigate(['/task-qr']);
+  }
+
+  onCancel() {
     this.stopMotionTracking();
     this.router.navigate(['/home']);
   }
 
-
-  startTimer() {
-    this.timerInterval = setInterval(() => {
-      if (this.remainingTime > 0) {
-        this.remainingTime--;
-        this.formatTime();
-      } else {
-        this.penaltyCount++;
-        this.stopTimer();
-      }
-      this.cdr.detectChanges();
-    }, 1000);
-  }
-
-  formatTime() {
-    const minutes = Math.floor(this.remainingTime / 60);
-    const seconds = this.remainingTime % 60;
-    this.localTimer = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  stopTimer() {
-    if (this.timerInterval) clearInterval(this.timerInterval);
-  }
-
-
   async startMotionTracking() {
     try {
+      if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
+        await (DeviceMotionEvent as any).requestPermission();
+      }
+
       this.accelListener = await Motion.addListener('accel', (event) => {
         this.ngZone.run(() => {
           const acc = event.acceleration;
@@ -100,6 +73,7 @@ export class TaskWalkPage implements OnInit, OnDestroy {
           if (force > 12 && !this.isThrottled && !this.isFinished) {
             this.stepsDone++;
             this.isThrottled = true;
+
             setTimeout(() => { this.isThrottled = false; }, 400);
 
             if (this.stepsDone >= this.stepsTarget) {
@@ -116,7 +90,6 @@ export class TaskWalkPage implements OnInit, OnDestroy {
 
   async triggerSuccess() {
     this.isFinished = true;
-    this.stopTimer();
     await Haptics.notification({ type: 'success' as any });
     this.cdr.detectChanges();
   }

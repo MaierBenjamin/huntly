@@ -5,6 +5,7 @@ import { Network, ConnectionStatus } from '@capacitor/network';
 import { Haptics } from '@capacitor/haptics';
 import { Router } from '@angular/router';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-task-sensor',
@@ -17,23 +18,16 @@ export class TaskWifiPage implements OnInit, OnDestroy {
   statusText: string = 'nicht verbunden';
   hasConnected: boolean = false;
   isFinished: boolean = false;
-
-  remainingTime: number = 120;
-  localTimer: string = '02:00';
-  timerInterval: any;
-  penaltyCount: number = 0;
-
   networkListener: any;
 
   constructor(
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    public router: Router
+    private router: Router,
+    public gameService: GameService
   ) {}
 
   async ngOnInit() {
-    this.startTimer();
-
     const status = await Network.getStatus();
     this.checkWifi(status);
 
@@ -44,29 +38,9 @@ export class TaskWifiPage implements OnInit, OnDestroy {
     });
   }
 
-  startTimer() {
-    this.timerInterval = setInterval(() => {
-      if (this.remainingTime > 0) {
-        this.remainingTime--;
-        this.formatTime();
-      } else {
-        this.penaltyCount++;
-        console.log('Zeit abgelaufen! Penalty erhöht auf:', this.penaltyCount);
-        this.stopTimer();
-      }
-      this.cdr.detectChanges();
-    }, 1000);
-  }
-
-  formatTime() {
-    const minutes = Math.floor(this.remainingTime / 60);
-    const seconds = this.remainingTime % 60;
-    this.localTimer = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  stopTimer() {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
+  ngOnDestroy() {
+    if (this.networkListener) {
+      this.networkListener.remove();
     }
   }
 
@@ -87,19 +61,24 @@ export class TaskWifiPage implements OnInit, OnDestroy {
 
   async triggerSuccess() {
     this.isFinished = true;
-    this.stopTimer();
     await Haptics.notification({ type: 'success' as any });
     this.cdr.detectChanges();
   }
 
-  ngOnDestroy() {
-    this.stopTimer();
-    if (this.networkListener) {
-      this.networkListener.remove();
+  onFinish(isTimerExpired: boolean) {
+    this.gameService.addSchnitzel();
+    if (isTimerExpired) {
+      this.gameService.addKartoffel();
     }
+    this.router.navigate(['/taskboard']);
   }
 
-  completeTask() {
+  onSkip() {
+    this.gameService.addKartoffel();
     this.router.navigate(['/taskboard']);
+  }
+
+  onCancel() {
+    this.router.navigate(['/home']);
   }
 }
