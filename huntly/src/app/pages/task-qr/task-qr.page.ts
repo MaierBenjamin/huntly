@@ -5,6 +5,7 @@ import { TaskLayoutComponent } from '../../components/task-layout/task-layout.co
 import { Router } from '@angular/router';
 import { BarcodeScanner, BarcodeFormat } from '@capacitor-mlkit/barcode-scanning';
 import { Haptics } from '@capacitor/haptics';
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 
 @Component({
   selector: 'app-task-qr',
@@ -75,27 +76,39 @@ export class TaskQrPage implements OnInit, OnDestroy {
     try {
       this.errorMessage = '';
 
-      const { barcodes } = await BarcodeScanner.readBarcodesFromImage({
-        formats: [BarcodeFormat.QrCode]
-      } as any);
+      const image = await Camera.getPhoto({
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Uri,
+        source: CameraSource.Prompt
+      });
 
-      if (barcodes?.length) {
-        const value = barcodes[0].displayValue;
+      if (image.path) {
+        const { barcodes } = await BarcodeScanner.readBarcodesFromImage({
+          path: image.path,
+          formats: [BarcodeFormat.QrCode]
+        });
 
-        if (value === 'Huntly ist cool!') {
-          this.scanResult = value;
-          this.scanned = true;
-          this.stopTimer(); 
-          await this.triggerSuccessHaptic();
+        if (barcodes && barcodes.length > 0) {
+          const value = barcodes[0].displayValue;
+
+          if (value === 'Huntly ist cool!') {
+            this.scanResult = value;
+            this.scanned = true;
+            await this.triggerSuccessHaptic();
+          } else {
+            this.errorMessage = 'Falscher Code! Such weiter.';
+            await Haptics.vibrate();
+          }
         } else {
-          this.errorMessage = 'Falscher Code! Such weiter.';
-          this.scanned = false;
+          this.errorMessage = 'Kein QR-Code erkannt.';
         }
-      } else {
-        this.errorMessage = 'Kein QR-Code erkannt.';
       }
-    } catch {
-      this.errorMessage = 'Bildwahl abgebrochen.';
+    } catch (e: any) {
+      console.error('QR-Fehler:', e);
+      if (e.message !== 'User cancelled photos app') {
+        this.errorMessage = 'Bild konnte nicht geladen werden.';
+      }
     }
   }
 
@@ -104,17 +117,7 @@ export class TaskQrPage implements OnInit, OnDestroy {
   }
 
 
-  onFinish() {
-    if (this.scanned) {
-      this.router.navigate(['/task-sensor']);
-    }
-  }
-
-  onSkip() {
-    this.router.navigate(['/task-sensor']);
-  }
-
-  onCancel() {
-    this.router.navigate(['/home']);
-  }
+  onFinish() { this.router.navigate(['/task-wifi']); }
+  onSkip() { this.router.navigate(['/task-wifi']); }
+  onCancel() { this.router.navigate(['/home']); }
 }

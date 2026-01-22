@@ -7,33 +7,26 @@ import { Router } from '@angular/router';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
 
 @Component({
-  selector: 'app-task-sensor',
-  templateUrl: './task-sensor.page.html',
-  styleUrls: ['./task-sensor.page.scss'],
+  selector: 'app-task-wifi',
+  templateUrl: './task-wifi.page.html',
+  styleUrls: ['./task-wifi.page.scss'],
   standalone: true,
   imports: [CommonModule, IonicModule, TaskLayoutComponent]
 })
-export class TaskSensorPage implements OnInit, OnDestroy {
+export class TaskWifiPage implements OnInit, OnDestroy {
   statusText: string = 'nicht verbunden';
-  hasConnected: boolean = false; 
-  isFinished: boolean = false;   
-  
-  remainingTime: number = 120; 
-  localTimer: string = '02:00';
-  timerInterval: any;
-  penaltyCount: number = 0; 
+  hasConnected: boolean = false;
+  isFinished: boolean = false;
 
   networkListener: any;
 
   constructor(
-    private ngZone: NgZone, 
+    private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
     public router: Router
   ) {}
 
   async ngOnInit() {
-    this.startTimer();
-
     const status = await Network.getStatus();
     this.checkWifi(status);
 
@@ -42,32 +35,6 @@ export class TaskSensorPage implements OnInit, OnDestroy {
         this.checkWifi(status);
       });
     });
-  }
-
-  startTimer() {
-    this.timerInterval = setInterval(() => {
-      if (this.remainingTime > 0) {
-        this.remainingTime--;
-        this.formatTime();
-      } else {
-        this.penaltyCount++;
-        console.log('Zeit abgelaufen! Penalty erhöht auf:', this.penaltyCount);
-        this.stopTimer();
-      }
-      this.cdr.detectChanges();
-    }, 1000);
-  }
-
-  formatTime() {
-    const minutes = Math.floor(this.remainingTime / 60);
-    const seconds = this.remainingTime % 60;
-    this.localTimer = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  stopTimer() {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
   }
 
   checkWifi(status: ConnectionStatus) {
@@ -87,19 +54,17 @@ export class TaskSensorPage implements OnInit, OnDestroy {
 
   async triggerSuccess() {
     this.isFinished = true;
-    this.stopTimer();
     await Haptics.notification({ type: 'success' as any });
     this.cdr.detectChanges();
   }
 
   ngOnDestroy() {
-    this.stopTimer();
     if (this.networkListener) {
       this.networkListener.remove();
     }
   }
 
   completeTask() {
-    this.router.navigate(['/next-page']); 
+    this.router.navigate(['/next-page']);
   }
 }

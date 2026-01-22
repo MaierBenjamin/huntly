@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { TaskSensorPage } from './task-sensor.page';
+import { TaskWifiPage } from './task-wifi.page';
 
-describe('TaskSensorPage', () => {
-  let component: TaskSensorPage;
-  let fixture: ComponentFixture<TaskSensorPage>;
+describe('TaskWifiPage', () => {
+  let component: TaskWifiPage;
+  let fixture: ComponentFixture<TaskWifiPage>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TaskSensorPage);
+    fixture = TestBed.createComponent(TaskWifiPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

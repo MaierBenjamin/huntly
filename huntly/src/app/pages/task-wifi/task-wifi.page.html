@@ -1,6 +1,5 @@
 <app-task-layout
   taskTitle="Verbinde und trenne dich mit dem ICT-KR6 Wlan"
-  [taskTimer]="localTimer"
   [isFinished]="isFinished"
   (finish)="completeTask()"
   (skip)="router.navigate(['/home'])"
@@ -13,16 +12,12 @@
   </div>
 
   <div task-content class="sensor-container">
-    <div class="timer-badge" [class.timer-low]="remainingTime < 30">
-      <ion-icon name="time-outline"></ion-icon>
-    </div>
-
     <p class="tip-text">Tipp: Das Passwort hängt an der Tafel</p>
 
     <div class="status-box">
       <span class="label">status: </span>
-      <span class="value" [class.red]="statusText === 'nicht verbunden'" 
-                          [class.green]="statusText === 'verbunden'">
+      <span class="value" [class.red]="statusText === 'nicht verbunden'"
+            [class.green]="statusText === 'verbunden'">
         {{ statusText }}
       </span>
     </div>
