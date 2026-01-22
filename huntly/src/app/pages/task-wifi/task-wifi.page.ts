@@ -5,7 +5,7 @@ import { Network, ConnectionStatus } from '@capacitor/network';
 import { Haptics } from '@capacitor/haptics';
 import { Router } from '@angular/router';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
-import { GameService } from '../../services/game.service'; // WICHTIG
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-task-sensor',

@@ -35,20 +35,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/task-wifi/task-wifi.page').then( m => m.TaskWifiPage)
   },
   {
-    path: 'leaderboard',
-    loadComponent: () => import('./pages/leaderboard/leaderboard.page').then( m => m.LeaderboardPage)
-  },
-  {
     path: 'task-walk',
     loadComponent: () => import('./pages/task-walk/task-walk.page').then( m => m.TaskWalkPage)
-  },  {
+  },
+  {
     path: 'history',
     loadComponent: () => import('./pages/history/history.page').then( m => m.HistoryPage)
   },
-  {
-    path: 'leaderboard',
-    loadComponent: () => import('./pages/leaderboard/leaderboard.page').then( m => m.LeaderboardPage)
-  },
+
 
 
 

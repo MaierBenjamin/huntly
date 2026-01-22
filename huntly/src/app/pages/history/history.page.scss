@@ -1,49 +1,75 @@
+ion-header {
+  padding-top: var(--ion-safe-area-top);
+  background-color: var(--ion-color-primary);
+
+  ion-toolbar {
+    --background: var(--ion-color-primary);
+    --color: white;
+    --border-style: none;
+    --min-height: 56px;
+    padding: 30px;
+  }
+}
+
 .history-background {
-  --background: #f4f7f6;
+  --background: #f8faf9;
 }
 
 .header-decoration {
   text-align: center;
-  padding: 30px 0;
+  padding: 20px 0 40px 0;
   background: var(--ion-color-primary);
   color: white;
-  border-bottom-left-radius: 30px;
-  border-bottom-right-radius: 30px;
-  margin-bottom: 20px;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  margin-top: -1px;
 
   ion-icon {
-    font-size: 50px;
-    margin-bottom: 10px;
+    font-size: 48px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
   }
 
   h2 {
     margin: 0;
+    font-size: 1.5rem;
     font-weight: 800;
-    text-transform: uppercase;
     letter-spacing: 1px;
+    text-transform: uppercase;
   }
 }
 
 .container {
-  padding: 0 16px 40px;
+  padding: 16px;
+  margin-top: -20px;
 }
 
 .empty-state {
   text-align: center;
-  margin-top: 50px;
-  color: #888;
+  padding: 60px 20px;
+
+  p {
+    color: #888;
+    font-size: 1.1rem;
+    margin: 20px 0;
+  }
 }
 
 .history-card {
   background: white;
   border-radius: 20px;
-  padding: 18px;
   margin-bottom: 12px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  animation: fadeIn 0.5s ease-out;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0,0,0,0.03);
+  overflow: hidden;
+  animation: slideIn 0.4s ease-out;
+
+  .card-content {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .card-left {
     display: flex;
@@ -52,36 +78,58 @@
     .player-name {
       font-size: 1.1rem;
       font-weight: 700;
-      color: #333;
+      color: #2c3e50;
     }
 
     .game-date {
       font-size: 0.8rem;
-      color: #999;
+      color: #95a5a6;
       margin-top: 4px;
     }
   }
 
   .card-right {
-    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
 
-    .stats-row {
-      font-size: 1rem;
-      font-weight: 600;
-      color: #444;
+    .time-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      color: #34495e;
 
-      &.scores {
-        margin-top: 6px;
-        font-size: 0.9rem;
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
+      ion-icon {
+        color: var(--ion-color-primary);
+      }
+    }
+
+    .badges-row {
+      display: flex;
+      gap: 6px;
+
+      .mini-badge {
+        background: #f0f3f2;
+        padding: 4px 8px;
+        border-radius: 10px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: black;
       }
     }
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+/* Animation beim Laden */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

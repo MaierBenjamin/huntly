@@ -1,14 +1,16 @@
-<ion-header [translucent]="true" class="ion-no-border">
+<ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
+
     <ion-title>Verlauf</ion-title>
+
     <ion-buttons slot="end">
-      <ion-button (click)="clearAll()" color="danger">
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+      <ion-button (click)="clearAll()">
+        <ion-icon slot="icon-only" name="trash-outline" color="light"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -22,25 +24,31 @@
 
   <div class="container">
     <div class="empty-state" *ngIf="history.length === 0">
+      <ion-icon name="hourglass-outline" style="font-size: 60px; color: #ccc;"></ion-icon>
       <p>Noch keine Jagden abgeschlossen.</p>
-      <ion-button fill="outline" (click)="goBack()">Jetzt starten!</ion-button>
+      <ion-button fill="outline" color="primary" (click)="goBack()">
+        Jetzt erste Jagd starten
+      </ion-button>
     </div>
 
     <div class="history-card" *ngFor="let game of history">
-      <div class="card-left">
-        <span class="player-name">{{ game.playerName }}</span>
-        <span class="game-date">{{ game.date }}</span>
-      </div>
-
-      <div class="card-right">
-        <div class="stats-row">
-          <span class="stat">⏱️ {{ game.totalTime }}</span>
+      <div class="card-content">
+        <div class="card-left">
+          <span class="player-name">{{ game.playerName }}</span>
+          <span class="game-date">{{ game.date }}</span>
         </div>
-        <div class="stats-row scores">
-          <span class="stat">🥩 {{ game.schnitzel }}</span>
-          <span class="stat">🥔 {{ game.kartoffeln }}</span>
+
+        <div class="card-right">
+          <div class="time-row">
+            <ion-icon name="time-outline"></ion-icon>
+            <span class="stat-value">{{ game.totalTime }}</span>
+          </div>
+          <div class="badges-row">
+            <span class="mini-badge schnitzel">🥩 {{ game.schnitzel }}</span>
+            <span class="mini-badge potato">🥔 {{ game.kartoffeln }}</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</ion-content>d
+</ion-content>
