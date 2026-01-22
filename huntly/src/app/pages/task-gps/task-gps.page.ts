@@ -35,6 +35,7 @@ constructor(
   ) {}
 
 async ngOnInit() {
+    this.startTimer();
     await this.startTracking();
   }
 
