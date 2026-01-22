@@ -5,7 +5,7 @@ import { Motion } from '@capacitor/motion';
 import { Haptics } from '@capacitor/haptics';
 import { Router } from '@angular/router';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
-import { GameService } from '../../services/game.service'; // WICHTIG
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-task-walk',
@@ -18,9 +18,7 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   stepsDone: number = 0;
   stepsTarget: number = 15;
   isFinished: boolean = false;
-
   taskStatusText = "Löse die Aufgabe";
-
 
   private accelListener: any;
   private isThrottled: boolean = false;
@@ -41,19 +39,23 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   }
 
   onFinish(isTimerExpired: boolean) {
+    this.gameService.handleTaskFinished(isTimerExpired);
 
-  this.stopMotionTracking();
-  this.router.navigate(['/task-qr']);
+    this.stopMotionTracking();
+    this.router.navigate(['/task-qr']);
   }
 
+
   onSkip() {
-    this.gameService.addKartoffel();
+    this.gameService.handleTaskSkipped();
+
     this.stopMotionTracking();
     this.router.navigate(['/task-qr']);
   }
 
   onCancel() {
     this.stopMotionTracking();
+    this.gameService.resetGame();
     this.router.navigate(['/home']);
   }
 

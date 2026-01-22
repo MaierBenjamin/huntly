@@ -1,8 +1,6 @@
-<link rel="stylesheet" href="../history/history.page.scss">
 <ion-content [fullscreen]="true" class="task-background">
   <div class="main-container">
     <div class="white-card result-card">
-
       <div class="emoji-header">🎉</div>
       <h1 class="title">Jagd beendet!</h1>
       <p class="subtitle">Gut gemacht, {{ gameService.playerName || 'Abenteurer' }}!</p>
@@ -10,32 +8,35 @@
       <div class="stats-grid">
         <div class="stat-item time">
           <ion-icon name="time-outline"></ion-icon>
-          <span class="value">{{ gameService.getFormattedTime() }}</span>
+          <span class="value">{{ finalTime }}</span>
           <span class="label">Gesamtzeit</span>
         </div>
 
         <div class="stat-item score">
           <span class="emoji-stat">🥩</span>
-          <span class="value">{{ gameService.schnitzelCount }}</span>
+          <span class="value">{{ finalSchnitzel }}</span>
           <span class="label">Schnitzel</span>
         </div>
 
         <div class="stat-item score">
           <span class="emoji-stat">🥔</span>
-          <span class="value">{{ gameService.kartoffelCount }}</span>
+          <span class="value">{{ finalKartoffeln }}</span>
           <span class="label">Kartoffeln</span>
         </div>
       </div>
 
       <div class="ranking-box">
         <ion-icon name="trophy-outline" class="trophy"></ion-icon>
+        <p class="rank-text">{{ getRank() }}</p>
       </div>
 
-      <button class="restart-btn" (click)="restartGame()">
-        <ion-icon name="restart-outline" slot="start"></ion-icon>
-        Nochmal spielen
-      </button>
+      <div class="action-buttons">
 
+        <button class="restart-btn" (click)="restartGame()">
+          <ion-icon name="refresh-outline" slot="start"></ion-icon>
+          Nochmal spielen
+        </button>
+      </div>
     </div>
   </div>
 </ion-content>

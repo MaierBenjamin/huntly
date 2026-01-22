@@ -27,7 +27,6 @@ export class GameService {
   private timerInterval: any;
   private readonly STORAGE_KEY = 'huntly_history';
 
-
   startGameTimer() {
     if (this.timerInterval) return;
     this.totalSeconds = 0;
@@ -37,8 +36,10 @@ export class GameService {
   }
 
   stopGameTimer() {
-    clearInterval(this.timerInterval);
-    this.timerInterval = null;
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+      this.timerInterval = null;
+    }
   }
 
   getFormattedTime(): string {
@@ -47,12 +48,16 @@ export class GameService {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
 
-
-  addSchnitzel() {
+  handleTaskFinished(isExpired: boolean) {
     this.schnitzelCount++;
+
+    if (isExpired) {
+      this.kartoffelCount++;
+    }
   }
 
-  addKartoffel() {
+
+  handleTaskSkipped() {
     this.kartoffelCount++;
   }
 
@@ -61,6 +66,7 @@ export class GameService {
     this.kartoffelCount = 0;
     this.totalSeconds = 0;
     this.currentTaskIndex = 0;
+    this.stopGameTimer();
   }
 
   saveCurrentGame() {
@@ -79,9 +85,11 @@ export class GameService {
       schnitzel: this.schnitzelCount,
       kartoffeln: this.kartoffelCount
     };
-    history.unshift(newResult);
 
+    history.unshift(newResult);
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(history.slice(0, 10)));
+
+    this.resetGame();
   }
 
   getHistory(): GameResult[] {
@@ -92,7 +100,6 @@ export class GameService {
   clearHistory() {
     localStorage.removeItem(this.STORAGE_KEY);
   }
-
 
   tasks: Task[] = [
     { title: 'Begebe dich zum Kühlschrank', description: 'Suche den grössten Kühlschrank im Raum.', type: 'geolocation' },

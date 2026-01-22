@@ -5,7 +5,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { Router } from '@angular/router';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
 import { Haptics } from '@capacitor/haptics';
-import { GameService } from '../../services/game.service'; // WICHTIG: Import
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-task-gps',
@@ -19,8 +19,7 @@ export class TaskGpsPage implements OnInit, OnDestroy {
   watchId: string | null = null;
   hasVibrated: boolean = false;
   isFinished: boolean = false;
-
-taskStatusText = "Löse die Aufgabe";
+  taskStatusText = "Löse die Aufgabe";
 
   readonly target = {
     lat: 47.027083,
@@ -33,7 +32,7 @@ taskStatusText = "Löse die Aufgabe";
     private router: Router,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    public gameService: GameService 
+    public gameService: GameService
   ) {}
 
   async ngOnInit() {
@@ -44,56 +43,65 @@ taskStatusText = "Löse die Aufgabe";
     this.stopTracking();
   }
 
-  onFinish(isTimerExpired: boolean) {
-  this.stopTracking();
-  this.router.navigate(['/task-walk']);
-  }
 
-  onSkip() {
-    this.gameService.addKartoffel();
+  onFinish(isTimerExpired: boolean) {
+    this.gameService.handleTaskFinished(isTimerExpired);
+
     this.stopTracking();
     this.router.navigate(['/task-walk']);
   }
 
+  onSkip() {
+    this.gameService.handleTaskSkipped();
+
+    this.stopTracking();
+    this.router.navigate(['/task-walk']);
+  }
+
+
   onCancel() {
     this.stopTracking();
+    this.gameService.resetGame();
     this.router.navigate(['/home']);
   }
 
   async startTracking() {
-    const permissions = await Geolocation.requestPermissions();
+    try {
+      const permissions = await Geolocation.requestPermissions();
 
-    if (permissions.location === 'granted') {
-      this.watchId = await Geolocation.watchPosition({
-        enableHighAccuracy: true,
-      }, (position) => {
-        this.ngZone.run(async () => {
-          if (position) {
-            const d = this.calculateDistance(
-              position.coords.latitude,
-              position.coords.longitude,
-              this.target.lat,
-              this.target.lng
-            );
+      if (permissions.location === 'granted') {
+        this.watchId = await Geolocation.watchPosition({
+          enableHighAccuracy: true,
+        }, (position) => {
+          this.ngZone.run(async () => {
+            if (position) {
+              const d = this.calculateDistance(
+                position.coords.latitude,
+                position.coords.longitude,
+                this.target.lat,
+                this.target.lng
+              );
 
-            this.distance = Math.round(d);
+              this.distance = Math.round(d);
 
-            // Wenn Ziel erreicht
-            if (this.distance <= this.TOLERANCE_METERS) {
-              this.isFinished = true;
-              if (!this.hasVibrated) {
-                await Haptics.notification({ type: 'success' as any });
-                this.hasVibrated = true;
-                this.taskStatusText = "Aufgabe erledigt";
+              if (this.distance <= this.TOLERANCE_METERS) {
+                this.isFinished = true;
+                if (!this.hasVibrated) {
+                  await Haptics.notification({ type: 'success' as any });
+                  this.hasVibrated = true;
+                  this.taskStatusText = "Aufgabe erledigt";
+                }
+              } else {
+                this.isFinished = false;
               }
-            } else {
-              this.isFinished = false;
-            }
 
-            this.cdr.detectChanges();
-          }
+              this.cdr.detectChanges();
+            }
+          });
         });
-      });
+      }
+    } catch (e) {
+      console.error('GPS Tracking Fehler:', e);
     }
   }
 

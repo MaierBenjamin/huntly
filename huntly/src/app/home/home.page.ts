@@ -18,11 +18,22 @@ export class HomePage {
     private router: Router
   ) {}
 
-  startHunt() {
-    if (this.gameService.playerName) {
-      this.router.navigate(['/permissions']);
-    }
+  restartGame() {
+    this.gameService.resetGame();
+    this.router.navigate(['/home']);
   }
+
+  startHunt() {
+    this.gameService.resetGame();
+    this.gameService.startGameTimer();
+    this.router.navigate(['/task-gps']);
+  }
+
+  onCancel() {
+    this.gameService.resetGame();
+    this.router.navigate(['/home']);
+  }
+
 
   openHistory() { this.router.navigate(['/history']); }
   openLeaderboard() { console.log('Rangliste'); }

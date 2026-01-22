@@ -8,7 +8,7 @@ import { TaskLayoutComponent } from '../../components/task-layout/task-layout.co
 import { GameService } from '../../services/game.service';
 
 @Component({
-  selector: 'app-task-sensor',
+  selector: 'app-task-wifi',
   templateUrl: './task-wifi.page.html',
   styleUrls: ['./task-wifi.page.scss'],
   standalone: true,
@@ -69,15 +69,17 @@ export class TaskWifiPage implements OnInit, OnDestroy {
   }
 
   onFinish(isTimerExpired: boolean) {
+    this.gameService.handleTaskFinished(isTimerExpired);
     this.router.navigate(['/taskboard']);
   }
 
   onSkip() {
-    this.gameService.addKartoffel();
+    this.gameService.handleTaskSkipped();
     this.router.navigate(['/taskboard']);
   }
 
   onCancel() {
+    this.gameService.resetGame();
     this.router.navigate(['/home']);
   }
 }

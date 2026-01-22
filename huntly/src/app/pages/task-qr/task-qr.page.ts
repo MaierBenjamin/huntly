@@ -77,17 +77,18 @@ export class TaskQrPage implements OnInit {
     await Haptics.notification({ type: 'success' as any });
   }
 
-  onFinish(isExpired: boolean) {
-  this.router.navigate(['/task-wifi']);
-
+  onFinish(isTimerExpired: boolean) {
+    this.gameService.handleTaskFinished(isTimerExpired);
+    this.router.navigate(['/task-wifi']);
   }
 
   onSkip() {
-    this.gameService.addKartoffel();
+    this.gameService.handleTaskSkipped();
     this.router.navigate(['/task-wifi']);
   }
 
   onCancel() {
+    this.gameService.resetGame();
     this.router.navigate(['/home']);
   }
 }

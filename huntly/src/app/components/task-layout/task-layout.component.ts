@@ -14,7 +14,7 @@ import { GameService } from '../../services/game.service';
 export class TaskLayoutComponent implements OnInit, OnDestroy {
   @Input() taskTitle: string = '';
   @Input() isFinished: boolean = false;
-  @Input() taskStatus: string = 'Noch nicht fertig'; // 
+  @Input() taskStatus: string = 'Noch nicht fertig'; //
 
   @Output() finish = new EventEmitter<boolean>();
   @Output() skip = new EventEmitter<void>();
@@ -43,14 +43,14 @@ export class TaskLayoutComponent implements OnInit, OnDestroy {
         this.updateTimerDisplay();
       } else {
         this.isTimerExpired = true;
-        this.gameService.addKartoffel();
+
         this.taskTimerDisplay = '00:00';
         clearInterval(this.intervalId);
       }
     }, 1000);
   }
 
-  
+
 
   updateTimerDisplay() {
     const minutes = Math.floor(this.taskSecondsLeft / 60);

@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { GameService } from '../../services/game.service';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { trophyOutline, timeOutline, refreshOutline } from 'ionicons/icons'; // Fix: refreshOutline statt reOutline
+import { trophyOutline, timeOutline, refreshOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-taskboard',
@@ -14,6 +14,9 @@ import { trophyOutline, timeOutline, refreshOutline } from 'ionicons/icons'; // 
   imports: [CommonModule, IonicModule]
 })
 export class TaskboardPage implements OnInit {
+  finalTime: string = '00:00';
+  finalSchnitzel: number = 0;
+  finalKartoffeln: number = 0;
 
   constructor(
     public gameService: GameService,
@@ -25,12 +28,16 @@ export class TaskboardPage implements OnInit {
   ngOnInit() {
     this.gameService.stopGameTimer();
 
+    this.finalTime = this.gameService.getFormattedTime();
+    this.finalSchnitzel = this.gameService.schnitzelCount;
+    this.finalKartoffeln = this.gameService.kartoffelCount;
+
     this.gameService.saveCurrentGame();
   }
 
   getRank(): string {
-    const s = this.gameService.schnitzelCount;
-    const k = this.gameService.kartoffelCount;
+    const s = this.finalSchnitzel;
+    const k = this.finalKartoffeln;
 
     if (s > k && k === 0) return 'Schnitzel-Gott! 👑';
     if (s > k) return 'Schnitzel-König 🥩';
@@ -44,29 +51,28 @@ export class TaskboardPage implements OnInit {
   }
 
   async sendToLeaderboard() {
-  const url = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc9v68rbCckYwcIekRLOaVZ0Qdm3eeh1xCEkgpn3d7pParfLQ/formResponse';
-  
-  const body = new URLSearchParams({
-    'entry.1860183935': this.gameService.playerName,
-    'entry.564282981': this.gameService.schnitzelCount.toString(),
-    'entry.1079317865': this.gameService.kartoffelCount.toString(),
-    'entry.985590604': this.gameService.getFormattedTime()
-  });
+    const url = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc9v68rbCckYwcIekRLOaVZ0Qdm3eeh1xCEkgpn3d7pParfLQ/formResponse';
 
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      mode: 'no-cors', 
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: body.toString()
+    const body = new URLSearchParams({
+      'entry.1860183935': this.gameService.playerName,
+      'entry.564282981': this.finalSchnitzel.toString(),
+      'entry.1079317865': this.finalKartoffeln.toString(),
+      'entry.985590604': this.finalTime
     });
-    
-    console.log('Anfrage gesendet!');
-    this.router.navigate(['/leaderboard']);
-  } catch (error) {
-    console.error('Fehler:', error);
+
+    try {
+      await fetch(url, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body.toString()
+      });
+
+      this.router.navigate(['/history']);
+    } catch (error) {
+      console.error('Fehler:', error);
+    }
   }
-}
 }
