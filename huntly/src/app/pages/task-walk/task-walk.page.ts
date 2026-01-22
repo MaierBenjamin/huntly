@@ -15,10 +15,10 @@ import { TaskLayoutComponent } from '../../components/task-layout/task-layout.co
 })
 export class TaskWalkPage implements OnInit, OnDestroy {
   stepsDone: number = 0;
-  stepsTarget: number = 15; 
+  stepsTarget: number = 15;
   isFinished: boolean = false;
-  
-  remainingTime: number = 120; 
+
+  remainingTime: number = 120;
   displayTime: string = '02:00';
   timerInterval: any;
   penaltyCount: number = 0;
@@ -27,8 +27,8 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   private isThrottled: boolean = false;
 
   constructor(
-    private ngZone: NgZone, 
-    private cdr: ChangeDetectorRef, 
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef,
     public router: Router
   ) {}
 
@@ -70,7 +70,7 @@ export class TaskWalkPage implements OnInit, OnDestroy {
         this.remainingTime--;
         this.formatTime();
       } else {
-        this.penaltyCount++; 
+        this.penaltyCount++;
         this.stopTimer();
       }
       this.cdr.detectChanges();
@@ -109,14 +109,14 @@ export class TaskWalkPage implements OnInit, OnDestroy {
           }
         });
       });
-    } catch (e) { 
-      console.error('Motion API nicht verfügbar oder Berechtigung fehlt', e); 
+    } catch (e) {
+      console.error('Motion API nicht verfügbar oder Berechtigung fehlt', e);
     }
   }
 
   async triggerSuccess() {
     this.isFinished = true;
-    this.stopTimer(); 
+    this.stopTimer();
     await Haptics.notification({ type: 'success' as any });
     this.cdr.detectChanges();
   }

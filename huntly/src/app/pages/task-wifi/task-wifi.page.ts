@@ -15,18 +15,18 @@ import { TaskLayoutComponent } from '../../components/task-layout/task-layout.co
 })
 export class TaskWifiPage implements OnInit, OnDestroy {
   statusText: string = 'nicht verbunden';
-  hasConnected: boolean = false; 
-  isFinished: boolean = false;   
-  
-  remainingTime: number = 120; 
+  hasConnected: boolean = false;
+  isFinished: boolean = false;
+
+  remainingTime: number = 120;
   localTimer: string = '02:00';
   timerInterval: any;
-  penaltyCount: number = 0; 
+  penaltyCount: number = 0;
 
   networkListener: any;
 
   constructor(
-    private ngZone: NgZone, 
+    private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
     public router: Router
   ) {}
@@ -100,6 +100,6 @@ export class TaskWifiPage implements OnInit, OnDestroy {
   }
 
   completeTask() {
-    this.router.navigate(['/next-page']); 
+    this.router.navigate(['/taskboard']);
   }
 }
