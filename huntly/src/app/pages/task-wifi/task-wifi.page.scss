@@ -1,0 +1,54 @@
+.wifi-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0;
+
+  .blue-box {
+    background: linear-gradient(135deg, #4da3ff 0%, #0066ff 100%);
+    width: 90px;
+    height: 90px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 102, 255, 0.2);
+
+    ion-icon {
+      font-size: 55px;
+      color: white;
+    }
+  }
+}
+
+.sensor-container {
+  text-align: center;
+
+  .tip-text {
+    color: #666;
+    font-size: 1rem;
+    margin-bottom: 50px;
+  }
+
+  .status-box {
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 18px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 280px;
+    font-size: 1.1rem;
+
+    .label { color: #333; }
+    .value.red { color: #ff4d4d; }
+    .value.green { color: #2dd36f; }
+  }
+
+  .instruction {
+    font-size: 0.9rem;
+    color: #999;
+    margin-top: 15px;
+
+    &.bold { font-weight: bold; color: #333; }
+    &.green-text { color: #2dd36f; font-weight: bold; }
+  }
+}

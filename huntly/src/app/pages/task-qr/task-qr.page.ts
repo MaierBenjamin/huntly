@@ -65,7 +65,7 @@ export class TaskQrPage {
     await Haptics.notification({ type: 'success' as any });
   }
 
-  onFinish() { this.router.navigate(['/task-sensor']); }
-  onSkip() { this.onFinish(); }
+  onFinish() { this.router.navigate(['/task-wifi']); }
+  onSkip() { this.router.navigate(['/task-wifi']); }
   onCancel() { this.router.navigate(['/home']); }
 }
