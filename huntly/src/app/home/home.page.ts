@@ -20,7 +20,7 @@ export class HomePage {
 
   startHunt() {
     if (this.gameService.playerName) {
-      this.router.navigate(['/task-gps']);
+      this.router.navigate(['/permissions']);
     }
   }
 
