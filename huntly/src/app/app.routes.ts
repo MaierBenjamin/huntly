@@ -37,7 +37,8 @@ export const routes: Routes = [
   {
     path: 'leaderboard',
     loadComponent: () => import('./pages/leaderboard/leaderboard.page').then( m => m.LeaderboardPage)
-  },  {
+  },
+  {
     path: 'task-walk',
     loadComponent: () => import('./pages/task-walk/task-walk.page').then( m => m.TaskWalkPage)
   },

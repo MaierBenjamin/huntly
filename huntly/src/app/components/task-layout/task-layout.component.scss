@@ -82,7 +82,6 @@ ion-content {
   margin-bottom: 20px;
 }
 
-/* Button Styling */
 .finish-btn {
   background-color: #54c37e;
   color: white;
@@ -129,4 +128,27 @@ ion-content {
   font-weight: bold;
   margin-top: auto;
   margin-bottom: 20px;
+}
+
+.card-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: #bbb;
+}
+
+.timer-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-wrapper ion-icon {
+  font-size: 1rem;
 }

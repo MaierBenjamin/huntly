@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>task-sensor</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-task-layout
+  taskTitle="Verbinde und trenne dich mit dem ICT-KR6 Wlan"
+  [taskTimer]="localTimer"
+  [isFinished]="isFinished"
+  (finish)="completeTask()"
+  (skip)="router.navigate(['/home'])"
+  (cancel)="router.navigate(['/home'])">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">task-sensor</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+  <div emoji class="wifi-icon-wrapper">
+    <div class="blue-box">
+      <ion-icon name="wifi"></ion-icon>
+    </div>
+  </div>
+
+  <div task-content class="sensor-container">
+    <div class="timer-badge" [class.timer-low]="remainingTime < 30">
+      <ion-icon name="time-outline"></ion-icon>
+    </div>
+
+    <p class="tip-text">Tipp: Das Passwort hängt an der Tafel</p>
+
+    <div class="status-box">
+      <span class="label">status: </span>
+      <span class="value" [class.red]="statusText === 'nicht verbunden'" 
+                          [class.green]="statusText === 'verbunden'">
+        {{ statusText }}
+      </span>
+    </div>
+
+    <p class="instruction" *ngIf="!hasConnected">Schritt 1: WLAN verbinden</p>
+    <p class="instruction bold" *ngIf="hasConnected && !isFinished">Schritt 2: WLAN jetzt trennen!</p>
+    <p class="instruction green-text" *ngIf="isFinished">Aufgabe erfolgreich abgeschlossen!</p>
+  </div>
+
+</app-task-layout>

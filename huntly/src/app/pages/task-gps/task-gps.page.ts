@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, NgZone, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { Geolocation } from '@capacitor/geolocation';
@@ -18,19 +18,29 @@ export class TaskGpsPage implements OnInit, OnDestroy {
   watchId: string | null = null;
   hasVibrated: boolean = false;
 
+  remainingTime: number = 120; 
+  localTimer: string = '02:00';
+  timerInterval: any;
+  penaltyCount: number = 0; 
+
   readonly target = {
-    lat: 47.027139,
-    lng: 8.301083
+    lat: 47.027083,
+    lng: 8.301139
   };
 
-  constructor(private router: Router) {}
+constructor(
+    private router: Router, 
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
+  ) {}
 
-  async ngOnInit() {
+async ngOnInit() {
     await this.startTracking();
   }
 
   ngOnDestroy() {
     this.stopTracking();
+    this.stopTimer();
   }
 
   completeTask() {
@@ -46,33 +56,36 @@ export class TaskGpsPage implements OnInit, OnDestroy {
     this.router.navigate(['/home']);
   }
 
-  async startTracking() {
+async startTracking() {
     const permissions = await Geolocation.requestPermissions();
 
     if (permissions.location === 'granted') {
       this.watchId = await Geolocation.watchPosition({
         enableHighAccuracy: true,
-      }, async (position) => {
-        if (position) {
-          const d = this.calculateDistance(
-            position.coords.latitude,
-            position.coords.longitude,
-            this.target.lat,
-            this.target.lng
-          );
+      }, (position) => {
+        this.ngZone.run(async () => {
+          if (position) {
+            const d = this.calculateDistance(
+              position.coords.latitude,
+              position.coords.longitude,
+              this.target.lat,
+              this.target.lng
+            );
 
-          this.distance = d < 5 ? 0 : Math.round(d);
+            this.distance = d < 2 ? 0 : Math.round(d);
 
-          if (this.distance === 0 && !this.hasVibrated) {
-            await Haptics.notification({ type: 'success' as any });
-            this.hasVibrated = true;
+            if (this.distance === 0 && !this.hasVibrated) {
+              await Haptics.notification({ type: 'success' as any });
+              this.hasVibrated = true;
+            }
+            this.cdr.detectChanges();
           }
-        }
+        });
       });
     }
   }
 
-  stopTracking() {
+stopTracking() {
     if (this.watchId) {
       Geolocation.clearWatch({ id: this.watchId });
     }
@@ -89,5 +102,33 @@ export class TaskGpsPage implements OnInit, OnDestroy {
       Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
+  }
+
+startTimer() {
+  this.ngZone.run(() => {
+    this.timerInterval = setInterval(() => {
+      if (this.remainingTime > 0) {
+        this.remainingTime--;
+        this.formatTime();
+      } else {
+        this.penaltyCount++;
+        this.stopTimer();
+      }
+      this.cdr.detectChanges();
+    }, 1000);
+  });
+}
+
+
+  formatTime() {
+    const minutes = Math.floor(this.remainingTime / 60);
+    const seconds = this.remainingTime % 60;
+    this.localTimer = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  }
+
+  stopTimer() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
   }
 }

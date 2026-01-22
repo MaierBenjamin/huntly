@@ -11,6 +11,8 @@ import { IonicModule } from '@ionic/angular';
 })
 export class TaskLayoutComponent implements OnInit, OnDestroy {
   @Input() taskTitle: string = '';
+  @Input() taskTimer!: string;
+
   @Input() isFinished: boolean = false;
 
   @Output() finish = new EventEmitter<void>();

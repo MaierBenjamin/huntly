@@ -1,5 +1,6 @@
 <app-task-layout
   taskTitle="QR-Code scannen"
+  [taskTimer]="localTimer"
   [isFinished]="scanned"
   (finish)="onFinish()"
   (skip)="onSkip()"
