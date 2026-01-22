@@ -1,0 +1,154 @@
+/* Der hellgrüne Hintergrund der gesamten Seite */
+.task-background {
+  --background: #D4AF37;
+}
+
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 20px;
+}
+
+/* Die weiße Ergebnis-Karte */
+.result-card {
+  background: white;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 30px;
+  padding: 40px 24px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  .emoji-header {
+    font-size: 70px;
+    margin-bottom: 15px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin: 0;
+    color: #333;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: #666;
+    margin: 5px 0 30px 0;
+  }
+}
+
+/* Das Grid für Zeit, Schnitzel und Kartoffeln */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 30px;
+
+  .stat-item {
+    background: #fdfdfd;
+    border: 1px solid #f0f0f0;
+    padding: 15px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* Die Zeit nimmt die volle Breite oben ein */
+    &.time {
+      grid-column: span 2;
+      background: #333;
+      color: white;
+      border: none;
+
+      ion-icon { color: #91E4BA; }
+    }
+
+    .emoji-stat {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    ion-icon {
+      font-size: 28px;
+      margin-bottom: 5px;
+    }
+
+    .value {
+      font-size: 1.4rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .label {
+      font-size: 0.7rem;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+  }
+}
+
+/* Box für den Rang / Titel */
+.ranking-box {
+  background: rgba(145, 228, 186, 0.15);
+  border: 2px solid rgba(145, 228, 186, 0.3);
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 30px;
+
+  .trophy {
+    font-size: 45px;
+    color: #f1c40f;
+    margin-bottom: 8px;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1.3rem;
+    color: #2d5a42;
+    font-weight: 800;
+  }
+}
+
+/* Restart Button */
+.restart-btn {
+  width: 100%;
+  background: #333;
+  color: white;
+  border: none;
+  padding: 20px;
+  border-radius: 22px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+  &:active {
+    transform: scale(0.96);
+  }
+
+  ion-icon {
+    font-size: 22px;
+  }
+}
+
+/* Animation für das Einfliegen der Karte */
+@keyframes slideUp {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
