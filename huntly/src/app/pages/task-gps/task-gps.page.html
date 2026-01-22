@@ -1,22 +1,14 @@
 <app-task-layout
-  taskTitle="Begib dich zum Ziel"
-  [isFinished]="distance === 0"
+  taskTitle="Finde den Zielort"
+  [isFinished]="isFinished"
   [taskStatus]="taskStatusText"
-  (finish)="completeTask()"
-  (skip)="nextTask()"
-  (cancel)="abortGame()">
+  (finish)="onFinish($event)"
+  (skip)="onSkip()"      (cancel)="onCancel()"> <span emoji>📍</span>
 
-  <span emoji>📍</span>
-
-  <div task-content class="gps-wrapper">
-    <div class="distance-circle" [class.at-target]="distance === 0">
-      <h2 class="meter-count">{{ distance }}</h2>
-      <p class="unit">Meter</p>
+  <div task-content class="gps-container">
+    <div class="distance-circle">
+      <h2>{{ distance }}m</h2>
+      <p>bis zum Ziel</p>
     </div>
-
-    <p class="instruction">
-      {{ distance === 0 ? 'Hervorragend! Du bist da.' : 'Such den Kühlschrank!' }}
-    </p>
   </div>
-
 </app-task-layout>

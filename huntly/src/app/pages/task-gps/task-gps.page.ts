@@ -5,6 +5,7 @@ import { Geolocation } from '@capacitor/geolocation';
 import { Router } from '@angular/router';
 import { TaskLayoutComponent } from '../../components/task-layout/task-layout.component';
 import { Haptics } from '@capacitor/haptics';
+import { GameService } from '../../services/game.service'; // WICHTIG: Import
 
 @Component({
   selector: 'app-task-gps',
@@ -17,14 +18,9 @@ export class TaskGpsPage implements OnInit, OnDestroy {
   distance: number = 999;
   watchId: string | null = null;
   hasVibrated: boolean = false;
-  isFinished: boolean = false; 
+  isFinished: boolean = false;
 
 taskStatusText = "Löse die Aufgabe";
-
-  remainingTime: number = 120; 
-  localTimer: string = '02:00';
-  timerInterval: any;
-  penaltyCount: number = 0; 
 
   readonly target = {
     lat: 47.027083,
@@ -34,37 +30,40 @@ taskStatusText = "Löse die Aufgabe";
   readonly TOLERANCE_METERS = 5;
 
   constructor(
-    private router: Router, 
+    private router: Router,
     private ngZone: NgZone,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    public gameService: GameService // Service injecten
   ) {}
 
   async ngOnInit() {
-    this.startTimer();
     await this.startTracking();
   }
 
   ngOnDestroy() {
     this.stopTracking();
-    this.stopTimer();
   }
 
-  completeTask() {
-    if (this.distance <= this.TOLERANCE_METERS) {
-      this.stopTracking();
-      this.stopTimer();
-      this.router.navigate(['/task-walk']);
-    } else {
-      Haptics.vibrate();
-      console.log('Du bist noch zu weit weg!');
+  // Diese Methode wird vom Layout-Event (finish) aufgerufen
+  onFinish(isTimerExpired: boolean) {
+    // 1. Belohnungs-Logik
+    this.gameService.addSchnitzel();
+    if (isTimerExpired) {
+      this.gameService.addKartoffel();
     }
-  }
 
-  nextTask() {
+    // 2. Navigation
+    this.stopTracking();
     this.router.navigate(['/task-walk']);
   }
 
-  abortGame() {
+  onSkip() {
+    this.gameService.addKartoffel();
+    this.stopTracking();
+    this.router.navigate(['/task-walk']);
+  }
+
+  onCancel() {
     this.stopTracking();
     this.router.navigate(['/home']);
   }
@@ -86,9 +85,10 @@ taskStatusText = "Löse die Aufgabe";
             );
 
             this.distance = Math.round(d);
+
+            // Wenn Ziel erreicht
             if (this.distance <= this.TOLERANCE_METERS) {
-              this.isFinished = true; 
-              
+              this.isFinished = true;
               if (!this.hasVibrated) {
                 await Haptics.notification({ type: 'success' as any });
                 this.hasVibrated = true;
@@ -97,7 +97,7 @@ taskStatusText = "Löse die Aufgabe";
             } else {
               this.isFinished = false;
             }
-            
+
             this.cdr.detectChanges();
           }
         });
@@ -108,6 +108,7 @@ taskStatusText = "Löse die Aufgabe";
   stopTracking() {
     if (this.watchId) {
       Geolocation.clearWatch({ id: this.watchId });
+      this.watchId = null;
     }
   }
 
@@ -122,32 +123,5 @@ taskStatusText = "Löse die Aufgabe";
       Math.sin(deltaLambda / 2) * Math.sin(deltaLambda / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
-  }
-
-  startTimer() {
-    this.ngZone.run(() => {
-      this.timerInterval = setInterval(() => {
-        if (this.remainingTime > 0) {
-          this.remainingTime--;
-          this.formatTime();
-        } else {
-          this.penaltyCount++;
-          this.stopTimer();
-        }
-        this.cdr.detectChanges();
-      }, 1000);
-    });
-  }
-
-  formatTime() {
-    const minutes = Math.floor(this.remainingTime / 60);
-    const seconds = this.remainingTime % 60;
-    this.localTimer = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-  }
-
-  stopTimer() {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
   }
 }

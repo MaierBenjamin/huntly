@@ -2,19 +2,15 @@
   taskTitle="Laufe 15 Schritte"
   [isFinished]="isFinished"
   [taskStatus]="taskStatusText"
-  (finish)="completeTask()"
-  (skip)="router.navigate(['/task-qr'])"
-  (cancel)="router.navigate(['/home'])">
+  (finish)="onFinish($event)"
+  (skip)="onSkip()"
+  (cancel)="onCancel()">
 
   <div emoji class="step-icon-wrapper">
     <span class="runner-emoji">🏃</span>
   </div>
 
   <div task-content class="step-container">
-    <div class="timer-badge" [class.low-time]="remainingTime < 20">
-      <ion-icon name="time-outline"></ion-icon>
-    </div>
-
     <div class="progress-info">
       <h1 class="counter">{{ stepsDone }} von {{ stepsTarget }} Schritten</h1>
     </div>
@@ -22,5 +18,7 @@
     <div class="progress-bar-bg">
       <div class="progress-bar-fill" [style.width.%]="(stepsDone / stepsTarget) * 100"></div>
     </div>
+
+    <p class="status-hint" *ngIf="!isFinished">Bewege dein Handy auf und ab!</p>
   </div>
 </app-task-layout>
