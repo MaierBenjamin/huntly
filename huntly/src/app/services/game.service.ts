@@ -112,4 +112,16 @@ export class GameService {
     await Haptics.impact({ style: ImpactStyle.Medium });
     this.currentTaskIndex++;
   }
+
+  async getOnlineLeaderboard(): Promise<any[]> {
+    await new Promise(resolve => setTimeout(resolve, 800));
+
+    return [
+      { name: 'SchnitzelKönig', schnitzel: 15, potato: 5, duration: '00:05:30' },
+      { name: 'KartoffelHeld', schnitzel: 12, potato: 8, duration: '00:06:15' },
+      { name: 'HungryJoe', schnitzel: 10, potato: 3, duration: '00:04:45' },
+      { name: 'VeggieLover', schnitzel: 2, potato: 20, duration: '00:07:10' },
+      { name: 'PostmanTest', schnitzel: 5, potato: 2, duration: '00:02:30' }
+    ].sort((a, b) => b.schnitzel - a.schnitzel);
+  }
 }

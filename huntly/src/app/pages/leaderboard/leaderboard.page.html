@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" class="custom-back-button">
+        <ion-icon slot="start" name="chevron-back"></ion-icon>
+        Zurück
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Leaderboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="leaderboard-background">
+  <div class="header-decoration">
+    <ion-icon name="trophy"></ion-icon>
+    <h2>Top Scorer</h2>
+  </div>
+
+  <div class="container">
+    <div *ngIf="isLoading" class="ion-text-center ion-padding">
+      <ion-spinner color="light" name="crescent"></ion-spinner>
+      <p style="color: white">Daten werden geladen...</p>
+    </div>
+
+    <div *ngIf="!isLoading">
+      <div *ngFor="let entry of globalScores; let i = index"
+           class="history-card"
+           [class.rank-gold]="i === 0"
+           [class.rank-silver]="i === 1"
+           [class.rank-bronze]="i === 2">
+
+        <div class="card-content">
+          <div class="card-left">
+            <span class="rank-number">#{{ i + 1 }}</span>
+            <div class="player-info">
+              <span class="player-name">{{ entry.name }}</span>
+              <span class="game-date">Globaler Rang</span>
+            </div>
+          </div>
+
+          <div class="card-right">
+            <div class="time-row">
+              <ion-icon name="time-outline"></ion-icon>
+              {{ entry.duration }}
+            </div>
+            <div class="badges-row">
+              <span class="mini-badge">🥩 {{ entry.schnitzel }}</span>
+              <span class="mini-badge">🥔 {{ entry.potato }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && globalScores.length === 0" class="empty-state">
+      <p>Noch keine Einträge vorhanden.</p>
+    </div>
+  </div>
+</ion-content>

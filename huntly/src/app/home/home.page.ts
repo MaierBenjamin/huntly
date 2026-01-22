@@ -36,5 +36,5 @@ export class HomePage {
 
 
   openHistory() { this.router.navigate(['/history']); }
-  openLeaderboard() { console.log('Rangliste'); }
+  openLeaderboard() { this.router.navigate(['/leaderboard']); }
 }

@@ -45,20 +45,19 @@ export class TaskboardPage implements OnInit {
     return 'Gutes Mittelfeld! 🙂';
   }
 
-  restartGame() {
-    this.gameService.resetGame();
-    this.router.navigate(['/home']);
-  }
-
   async sendToLeaderboard() {
     const url = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc9v68rbCckYwcIekRLOaVZ0Qdm3eeh1xCEkgpn3d7pParfLQ/formResponse';
 
-    const body = new URLSearchParams({
-      'entry.1860183935': this.gameService.playerName,
-      'entry.564282981': this.finalSchnitzel.toString(),
-      'entry.1079317865': this.finalKartoffeln.toString(),
-      'entry.985590604': this.finalTime
-    });
+    const name = this.gameService.playerName || 'Anonym';
+    const schnitzel = this.finalSchnitzel;
+    const potato = this.finalKartoffeln;
+
+    const duration = `00:${this.finalTime}`;
+
+    const body = `entry.1860183935=${encodeURIComponent(name)}` +
+      `&entry.564282981=${schnitzel}` +
+      `&entry.1079317865=${potato}` +
+      `&entry.985590604=${duration}`;
 
     try {
       await fetch(url, {
@@ -67,12 +66,19 @@ export class TaskboardPage implements OnInit {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: body.toString()
+        body: body
       });
 
-      this.router.navigate(['/history']);
+      console.log('Daten erfolgreich an Google Forms gesendet');
+      this.router.navigate(['/leaderboard']);
     } catch (error) {
-      console.error('Fehler:', error);
+      console.error('Fehler beim Senden:', error);
     }
   }
+  restartGame() {
+    this.gameService.resetGame();
+    this.sendToLeaderboard();
+    this.router.navigate(['/home']);
+  }
+
 }
