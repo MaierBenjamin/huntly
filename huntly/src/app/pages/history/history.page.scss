@@ -1,0 +1,87 @@
+.history-background {
+  --background: #f4f7f6;
+}
+
+.header-decoration {
+  text-align: center;
+  padding: 30px 0;
+  background: var(--ion-color-primary);
+  color: white;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  margin-bottom: 20px;
+
+  ion-icon {
+    font-size: 50px;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    margin: 0;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+}
+
+.container {
+  padding: 0 16px 40px;
+}
+
+.empty-state {
+  text-align: center;
+  margin-top: 50px;
+  color: #888;
+}
+
+.history-card {
+  background: white;
+  border-radius: 20px;
+  padding: 18px;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  animation: fadeIn 0.5s ease-out;
+
+  .card-left {
+    display: flex;
+    flex-direction: column;
+
+    .player-name {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #333;
+    }
+
+    .game-date {
+      font-size: 0.8rem;
+      color: #999;
+      margin-top: 4px;
+    }
+  }
+
+  .card-right {
+    text-align: right;
+
+    .stats-row {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #444;
+
+      &.scores {
+        margin-top: 6px;
+        font-size: 0.9rem;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
