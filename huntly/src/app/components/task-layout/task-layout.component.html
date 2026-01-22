@@ -1,14 +1,9 @@
 <ion-content [fullscreen]="true" class="task-page-content" [class.success-bg]="isFinished">
 
   <div class="game-stats-header">
-    <div class="score-pill">
-      <span>🥩 {{ gameService.schnitzelCount }}</span>
-      <span class="divider">|</span>
-      <span>🥔 {{ gameService.kartoffelCount }}</span>
-    </div>
+    
     <div class="total-time">
       <ion-icon name="stopwatch-outline"></ion-icon>
-      <span>{{ gameService.getFormattedTime() }}</span>
     </div>
   </div>
 
@@ -16,7 +11,11 @@
     <div class="white-card">
 
       <div class="card-header">
-        <span class="app-name">Huntly</span>
+        <div class="score">
+            <span>🥩 {{ gameService.schnitzelCount }}</span>
+            
+            <span>🥔 {{ gameService.kartoffelCount }}</span>
+        </div>
 
         <div class="timer-wrapper" [class.timer-expired]="isTimerExpired">
           <ion-icon [name]="isTimerExpired ? 'alert-circle-outline' : 'time-outline'"></ion-icon>

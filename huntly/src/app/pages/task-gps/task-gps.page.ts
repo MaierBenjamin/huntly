@@ -33,7 +33,7 @@ taskStatusText = "Löse die Aufgabe";
     private router: Router,
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
-    public gameService: GameService // Service injecten
+    public gameService: GameService 
   ) {}
 
   async ngOnInit() {
@@ -44,17 +44,9 @@ taskStatusText = "Löse die Aufgabe";
     this.stopTracking();
   }
 
-  // Diese Methode wird vom Layout-Event (finish) aufgerufen
   onFinish(isTimerExpired: boolean) {
-    // 1. Belohnungs-Logik
-    this.gameService.addSchnitzel();
-    if (isTimerExpired) {
-      this.gameService.addKartoffel();
-    }
-
-    // 2. Navigation
-    this.stopTracking();
-    this.router.navigate(['/task-walk']);
+  this.stopTracking();
+  this.router.navigate(['/task-walk']);
   }
 
   onSkip() {

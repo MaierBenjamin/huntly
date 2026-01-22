@@ -78,13 +78,8 @@ export class TaskQrPage implements OnInit {
   }
 
   onFinish(isExpired: boolean) {
-    this.gameService.addSchnitzel();
+  this.router.navigate(['/task-wifi']);
 
-    if (isExpired) {
-      this.gameService.addKartoffel();
-    }
-
-    this.router.navigate(['/task-wifi']);
   }
 
   onSkip() {

@@ -20,8 +20,8 @@ export class TaskLayoutComponent implements OnInit, OnDestroy {
   @Output() skip = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
-  taskSecondsLeft: number = 120;
-  taskTimerDisplay: string = '02:00';
+  taskSecondsLeft: number = 5;
+  taskTimerDisplay: string = '00:05';
   isTimerExpired: boolean = false;
 
   private intervalId: any;
@@ -43,11 +43,14 @@ export class TaskLayoutComponent implements OnInit, OnDestroy {
         this.updateTimerDisplay();
       } else {
         this.isTimerExpired = true;
+        this.gameService.addKartoffel();
         this.taskTimerDisplay = '00:00';
         clearInterval(this.intervalId);
       }
     }, 1000);
   }
+
+  
 
   updateTimerDisplay() {
     const minutes = Math.floor(this.taskSecondsLeft / 60);

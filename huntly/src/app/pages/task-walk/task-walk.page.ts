@@ -41,12 +41,9 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   }
 
   onFinish(isTimerExpired: boolean) {
-    this.gameService.addSchnitzel();
-    if (isTimerExpired) {
-      this.gameService.addKartoffel();
-    }
-    this.stopMotionTracking();
-    this.router.navigate(['/task-qr']);
+
+  this.stopMotionTracking();
+  this.router.navigate(['/task-qr']);
   }
 
   onSkip() {

@@ -25,10 +25,39 @@ export class TaskboardPage implements OnInit {
   ngOnInit() {
 
     this.gameService.stopGameTimer();
+
+    
   }
 
   restartGame() {
     this.gameService.resetGame();
     this.router.navigate(['/home']);
   }
+
+  async sendToLeaderboard() {
+  const url = 'https://docs.google.com/forms/u/0/d/e/1FAIpQLSc9v68rbCckYwcIekRLOaVZ0Qdm3eeh1xCEkgpn3d7pParfLQ/formResponse';
+  
+  const body = new URLSearchParams({
+    'entry.1860183935': this.gameService.playerName,
+    'entry.564282981': this.gameService.schnitzelCount.toString(),
+    'entry.1079317865': this.gameService.kartoffelCount.toString(),
+    'entry.985590604': this.gameService.getFormattedTime()
+  });
+
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      mode: 'no-cors', 
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: body.toString()
+    });
+    
+    console.log('Anfrage gesendet!');
+    this.router.navigate(['/leaderboard']);
+  } catch (error) {
+    console.error('Fehler:', error);
+  }
+}
 }
