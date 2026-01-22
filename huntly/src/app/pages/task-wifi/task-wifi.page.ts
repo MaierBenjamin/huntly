@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar } from '@ionic/angular/standalone';
 
 @Component({
-  selector: 'app-task-sensor',
-  templateUrl: './task-sensor.page.html',
-  styleUrls: ['./task-sensor.page.scss'],
+  selector: 'app-task-wifi',
+  templateUrl: './task-wifi.page.html',
+  styleUrls: ['./task-wifi.page.scss'],
   standalone: true,
   imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule]
 })
-export class TaskSensorPage implements OnInit {
+export class TaskWifiPage implements OnInit {
 
   constructor() { }
 

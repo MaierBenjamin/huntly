@@ -31,13 +31,14 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/task-qr/task-qr.page').then( m => m.TaskQrPage)
   },
   {
-    path: 'task-sensor',
-    loadComponent: () => import('./pages/task-sensor/task-sensor.page').then( m => m.TaskSensorPage)
+    path: 'task-wifi',
+    loadComponent: () => import('./pages/task-wifi/task-wifi.page').then( m => m.TaskWifiPage)
   },
   {
     path: 'leaderboard',
     loadComponent: () => import('./pages/leaderboard/leaderboard.page').then( m => m.LeaderboardPage)
-  },  {
+  },
+  {
     path: 'task-walk',
     loadComponent: () => import('./pages/task-walk/task-walk.page').then( m => m.TaskWalkPage)
   },
