@@ -1,6 +1,7 @@
 <app-task-layout
   taskTitle="Verbinde und trenne dich mit dem ICT-KR6 Wlan"
   [isFinished]="isFinished"
+  [taskStatus]="taskStatusText"
   (finish)="completeTask()"
   (skip)="router.navigate(['/taskboard'])"
   (cancel)="router.navigate(['/home'])">

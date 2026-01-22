@@ -14,6 +14,7 @@ import { GameService } from '../../services/game.service';
 export class TaskLayoutComponent implements OnInit, OnDestroy {
   @Input() taskTitle: string = '';
   @Input() isFinished: boolean = false;
+  @Input() taskStatus: string = 'Noch nicht fertig'; // 
 
   @Output() finish = new EventEmitter<boolean>();
   @Output() skip = new EventEmitter<void>();

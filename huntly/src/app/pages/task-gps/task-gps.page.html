@@ -1,6 +1,7 @@
 <app-task-layout
   taskTitle="Begib dich zum Ziel"
   [isFinished]="distance === 0"
+  [taskStatus]="taskStatusText"
   (finish)="completeTask()"
   (skip)="nextTask()"
   (cancel)="abortGame()">

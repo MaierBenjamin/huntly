@@ -1,6 +1,7 @@
 <app-task-layout
   taskTitle="QR-Code scannen"
   [isFinished]="scanned"
+  [taskStatus]="taskStatusText"
   (finish)="onFinish($event)"
   (skip)="onSkip()"
   (cancel)="onCancel()">

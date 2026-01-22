@@ -25,6 +25,8 @@ export class TaskWifiPage implements OnInit, OnDestroy {
 
   networkListener: any;
 
+  taskStatusText = "Löse die Aufgabe";
+
   constructor(
     private ngZone: NgZone,
     private cdr: ChangeDetectorRef,
@@ -88,6 +90,7 @@ export class TaskWifiPage implements OnInit, OnDestroy {
   async triggerSuccess() {
     this.isFinished = true;
     this.stopTimer();
+    this.taskStatusText = "Aufgabe erledigt";
     await Haptics.notification({ type: 'success' as any });
     this.cdr.detectChanges();
   }

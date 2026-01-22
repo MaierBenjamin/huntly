@@ -23,6 +23,9 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   timerInterval: any;
   penaltyCount: number = 0;
 
+  taskStatusText = "Löse die Aufgabe";
+
+
   private accelListener: any;
   private isThrottled: boolean = false;
 
@@ -104,6 +107,7 @@ export class TaskWalkPage implements OnInit, OnDestroy {
 
             if (this.stepsDone >= this.stepsTarget) {
               this.triggerSuccess();
+              this.taskStatusText = "Aufgabe erledigt";
             }
             this.cdr.detectChanges();
           }

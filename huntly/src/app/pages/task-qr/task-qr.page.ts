@@ -21,6 +21,9 @@ export class TaskQrPage implements OnInit {
   scanResult = '';
   errorMessage = '';
 
+  taskStatusText = "Löse die Aufgabe";
+
+
   constructor(
     private router: Router,
     public gameService: GameService
@@ -53,6 +56,7 @@ export class TaskQrPage implements OnInit {
             this.scanResult = value;
             this.scanned = true;
             await this.triggerSuccessHaptic();
+            this.taskStatusText = "Aufgabe erledigt"
           } else {
             this.errorMessage = 'Falscher Code! Such weiter.';
             await Haptics.vibrate();

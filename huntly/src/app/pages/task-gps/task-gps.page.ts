@@ -19,6 +19,8 @@ export class TaskGpsPage implements OnInit, OnDestroy {
   hasVibrated: boolean = false;
   isFinished: boolean = false; 
 
+taskStatusText = "Löse die Aufgabe";
+
   remainingTime: number = 120; 
   localTimer: string = '02:00';
   timerInterval: any;
@@ -90,6 +92,7 @@ export class TaskGpsPage implements OnInit, OnDestroy {
               if (!this.hasVibrated) {
                 await Haptics.notification({ type: 'success' as any });
                 this.hasVibrated = true;
+                this.taskStatusText = "Aufgabe erledigt";
               }
             } else {
               this.isFinished = false;

@@ -1,6 +1,7 @@
 <app-task-layout
   taskTitle="Laufe 15 Schritte"
   [isFinished]="isFinished"
+  [taskStatus]="taskStatusText"
   (finish)="completeTask()"
   (skip)="router.navigate(['/task-qr'])"
   (cancel)="router.navigate(['/home'])">

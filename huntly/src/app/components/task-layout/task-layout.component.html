@@ -39,7 +39,7 @@
           class="finish-btn"
           [disabled]="!isFinished"
           (click)="finish.emit()">
-          Aufgabe erledigt
+          {{taskStatus}}
         </button>
 
         <div class="nav-btns">
