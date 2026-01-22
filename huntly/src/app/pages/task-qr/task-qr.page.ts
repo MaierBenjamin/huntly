@@ -95,6 +95,7 @@ export class TaskQrPage implements OnInit, OnDestroy {
           if (value === 'Huntly ist cool!') {
             this.scanResult = value;
             this.scanned = true;
+            this.stopTimer(); 
             await this.triggerSuccessHaptic();
           } else {
             this.errorMessage = 'Falscher Code! Such weiter.';
