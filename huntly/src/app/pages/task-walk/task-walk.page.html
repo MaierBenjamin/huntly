@@ -1,5 +1,7 @@
 <app-task-layout
-  taskTitle="Laufe 10 Meter"
+  taskTitle="Laufe 15 Schritte"
+    [taskTimer]="localTimer"
+
   [isFinished]="isFinished"
   (finish)="completeTask()"
   (skip)="router.navigate(['/home'])"
@@ -12,7 +14,6 @@
   <div task-content class="step-container">
     <div class="timer-badge" [class.low-time]="remainingTime < 20">
       <ion-icon name="time-outline"></ion-icon>
-      <span>{{ displayTime }}</span>
     </div>
 
     <div class="progress-info">

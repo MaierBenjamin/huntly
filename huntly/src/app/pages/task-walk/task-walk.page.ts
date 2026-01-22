@@ -18,8 +18,8 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   stepsTarget: number = 15; 
   isFinished: boolean = false;
   
-  remainingTime: number = 120; 
-  displayTime: string = '02:00';
+  remainingTime: number = 30; 
+  localTimer: string = '00:30';
   timerInterval: any;
   penaltyCount: number = 0;
 
@@ -80,7 +80,7 @@ export class TaskWalkPage implements OnInit, OnDestroy {
   formatTime() {
     const minutes = Math.floor(this.remainingTime / 60);
     const seconds = this.remainingTime % 60;
-    this.displayTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    this.localTimer = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 
   stopTimer() {
