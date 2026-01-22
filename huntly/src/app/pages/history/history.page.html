@@ -1,16 +1,17 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-button (click)="goBack()">
-        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      <ion-button (click)="goBack()" class="custom-nav-button">
+        <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+        Zurück
       </ion-button>
     </ion-buttons>
 
     <ion-title>Verlauf</ion-title>
 
     <ion-buttons slot="end">
-      <ion-button (click)="clearAll()">
-        <ion-icon slot="icon-only" name="trash-outline" color="light"></ion-icon>
+      <ion-button (click)="clearAll()" class="custom-nav-button">
+        Löschen
       </ion-button>
     </ion-buttons>
   </ion-toolbar>

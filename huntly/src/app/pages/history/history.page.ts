@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { GameService, GameResult } from '../../services/game.service';
 import { addIcons } from 'ionicons';
-import { trashOutline, arrowBackOutline, trophyOutline } from 'ionicons/icons';
-import { Router } from '@angular/router';
+import { arrowBackOutline, trophyOutline, timeOutline, hourglassOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-history',
@@ -18,9 +17,9 @@ export class HistoryPage implements OnInit {
 
   constructor(
     private gameService: GameService,
-    private router: Router
+    private navCtrl: NavController
   ) {
-    addIcons({ trashOutline, arrowBackOutline, trophyOutline });
+    addIcons({ arrowBackOutline, trophyOutline, timeOutline, hourglassOutline });
   }
 
   ngOnInit() {
@@ -32,7 +31,7 @@ export class HistoryPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/home']);
+    this.navCtrl.back();
   }
 
   clearAll() {
