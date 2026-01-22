@@ -45,11 +45,11 @@ async ngOnInit() {
   }
 
   completeTask() {
-    this.router.navigate(['/task-qr']);
+    this.router.navigate(['/task-walk']);
   }
 
   nextTask() {
-    this.router.navigate(['/task-qr']);
+    this.router.navigate(['/task-walk']);
   }
 
   abortGame() {

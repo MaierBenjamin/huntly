@@ -1,13 +1,26 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>task-walk</ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-task-layout
+  taskTitle="Laufe 10 Meter"
+  [isFinished]="isFinished"
+  (finish)="completeTask()"
+  (skip)="router.navigate(['/home'])"
+  (cancel)="router.navigate(['/home'])">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">task-walk</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+  <div emoji class="step-icon-wrapper">
+    <span class="runner-emoji">🏃</span>
+  </div>
+
+  <div task-content class="step-container">
+    <div class="timer-badge" [class.low-time]="remainingTime < 20">
+      <ion-icon name="time-outline"></ion-icon>
+      <span>{{ displayTime }}</span>
+    </div>
+
+    <div class="progress-info">
+      <h1 class="counter">{{ stepsDone }} von {{ stepsTarget }} Schritten</h1>
+    </div>
+
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" [style.width.%]="(stepsDone / stepsTarget) * 100"></div>
+    </div>
+  </div>
+</app-task-layout>
