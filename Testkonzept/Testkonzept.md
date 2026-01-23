@@ -46,7 +46,7 @@ Dieses Dokument beschreibt das manuelle Testverfahren für die Huntly-App. Ziel 
 | **TC-12** | **Schnitzel-Logik** | Aufgabe innerhalb des Zeitlimits gelöst. | +1 Schnitzel (🥩). |
 | **TC-13** | **Kartoffel-Logik** | Aufgabe gelöst, nachdem der Timer abgelaufen ist. | +1 Schnitzel UND +1 Kartoffel (🥔). |
 | **TC-14** | **Reiner Zeit-Skip** | Timer abgelaufen, Aufgabe aber übersprungen. | Nur +1 Kartoffel |
-| **TC-15** | **Zeitmessung** | Gesamte Jagd beenden. | Korrekte Formatierung der Gesamtzeit (mm:ss). |
+| **TC-15** | **Zeitmessung** | Jagd abgeschlossen. | Zeit wird korrekt formatiert (mm:ss) gespeichert. |
 
 ---
 
