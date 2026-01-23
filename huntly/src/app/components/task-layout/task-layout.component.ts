@@ -22,8 +22,8 @@ export class TaskLayoutComponent implements OnInit, OnDestroy {
   @Output() skip = new EventEmitter<void>();
   @Output() cancel = new EventEmitter<void>();
 
-  taskSecondsLeft: number = 5;
-  taskTimerDisplay: string = '00:05';
+  taskSecondsLeft: number = 60;
+  taskTimerDisplay: string = '01:00';
   isTimerExpired: boolean = false;
 
   private intervalId: any;
