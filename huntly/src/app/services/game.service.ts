@@ -19,7 +19,7 @@ export interface Task {
   providedIn: 'root'
 })
 export class GameService {
-  playerName: string = 'Test Benutzer';
+  playerName: string = '';
   currentTaskIndex: number = 0;
   schnitzelCount: number = 0;
   kartoffelCount: number = 0;

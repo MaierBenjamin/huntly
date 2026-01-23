@@ -21,6 +21,7 @@ export class TaskGpsPage implements OnInit, OnDestroy {
   isFinished: boolean = false;
   taskStatusText = "Löse die Aufgabe";
 
+
   readonly target = {
     lat: 47.027083,
     lng: 8.301139
