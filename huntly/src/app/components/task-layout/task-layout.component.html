@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true" class="task-page-content" [class.success-bg]="isFinished">
 
   <div class="game-stats-header">
-    
+
     <div class="total-time">
       <ion-icon name="stopwatch-outline"></ion-icon>
     </div>
@@ -13,7 +13,7 @@
       <div class="card-header">
         <div class="score">
             <span>🥩 {{ gameService.schnitzelCount }}</span>
-            
+
             <span>🥔 {{ gameService.kartoffelCount }}</span>
         </div>
 
@@ -37,7 +37,7 @@
         <button
           class="finish-btn"
           [disabled]="!isFinished"
-          (click)="finish.emit()">
+          (click)="finish.emit(isTimerExpired)">
           {{taskStatus}}
         </button>
 

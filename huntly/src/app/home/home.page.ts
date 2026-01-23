@@ -26,7 +26,7 @@ export class HomePage {
   startHunt() {
     this.gameService.resetGame();
     this.gameService.startGameTimer();
-    this.router.navigate(['/task-gps']);
+    this.router.navigate(['/permissions']);
   }
 
   onCancel() {

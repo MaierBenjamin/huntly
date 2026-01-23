@@ -70,7 +70,7 @@ export class TaskboardPage implements OnInit {
       });
 
       console.log('Daten erfolgreich an Google Forms gesendet');
-      this.router.navigate(['/leaderboard']);
+      this.router.navigate(['/home']);
     } catch (error) {
       console.error('Fehler beim Senden:', error);
     }
