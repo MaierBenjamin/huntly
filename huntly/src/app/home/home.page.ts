@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GameService } from '../services/game.service';
+import { Haptics, ImpactStyle } from '@capacitor/haptics'; 
 
 @Component({
   selector: 'app-home',
@@ -23,9 +24,12 @@ export class HomePage {
     this.router.navigate(['/home']);
   }
 
-  startHunt() {
+  async startHunt() {
     this.gameService.resetGame();
     this.gameService.startGameTimer();
+    
+    await this.vibrateTriple();
+    
     this.router.navigate(['/permissions']);
   }
 
@@ -34,6 +38,12 @@ export class HomePage {
     this.router.navigate(['/home']);
   }
 
+  private async vibrateTriple() {
+    for (let i = 0; i < 3; i++) {
+      await Haptics.impact({ style: ImpactStyle.Medium });
+      await new Promise(resolve => setTimeout(resolve, 150));
+    }
+  }
 
   openHistory() { this.router.navigate(['/history']); }
   openLeaderboard() { this.router.navigate(['/leaderboard']); }
