@@ -48,12 +48,11 @@ export class GameService {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   }
 
-  handleTaskFinished(isExpired: boolean) {
-    this.schnitzelCount++;
-
-    if (isExpired) {
+  handleTaskFinished(isTimerExpired: boolean) {
+    if(isTimerExpired){
       this.kartoffelCount++;
     }
+      this.schnitzelCount++;
   }
 
 
